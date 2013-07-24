@@ -1,9 +1,24 @@
-#include <stdio.h>
-#include <stdlib.h>
+/* 
+    abCalc.c
+        By: Jeremy Rand
+ */
 
 
-int main(void)
+#include "abCalcExpr.h"
+#include "abCalcExprInt.h"
+#include "abCalcExprReal.h"
+#include "abCalcMode.h"
+#include "abCalcStack.h"
+
+
+void abCalcInit(void)
 {
-    printf("Hello, world!\n");
-    exit(0);
+    abCalcExprInit();
+    abCalcExprRealInit();
+    abCalcExprIntInit();
+
+    abCalcModeInit();
+    abCalcStackInit();
 }
+
+
