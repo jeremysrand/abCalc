@@ -14,7 +14,7 @@ typedef enum abCalcExprType {
 
 
 typedef double abCalcRealType;
-typedef long abCalcIntType;
+typedef unsigned long abCalcIntType;
 
 
 typedef struct abCalcExpr {
