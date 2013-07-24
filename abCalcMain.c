@@ -31,7 +31,7 @@ int main(void)
     abCalcInit();
 
     while (!timeToQuit) {
-        printf("Stack:\n");
+        printf("\n---------------------------\nStack:\n");
         depth = abCalcStackNumItems();
 
         if (depth == 0) {
@@ -45,11 +45,11 @@ int main(void)
 
         errorString = abCalcGetError();
         if (errorString != NULL) {
-            printf("\n   %s\n", errorString);
+            printf("\n   === %s ===\n", errorString);
             abCalcClearError();
         }
 
-        timeToQuit = 1;
+        printf("> ");
         if (fgets(gBuffer, sizeof(gBuffer), stdin) != NULL) {
             len = strlen(gBuffer);
             if ((gBuffer[len - 1] == '\r') ||
@@ -66,6 +66,8 @@ int main(void)
             } else {
                 abCalcRaiseError(abCalcSyntaxError, NULL);
             }
+        } else {
+            timeToQuit = 1;
         }
     }
 

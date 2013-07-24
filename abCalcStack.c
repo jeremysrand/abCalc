@@ -45,12 +45,17 @@ abCalcExpr *abCalcStackExprPush(abCalcExpr *expr)
 abCalcExpr *abCalcStackExprPop(abCalcExpr *expr)
 {
     abCalcExpr *result = NULL;
-    if ((gStackNumItems > 0) &&
-        (expr != NULL)) {
-        gStackNumItems--;
+
+    if (gStackNumItems < 1)
+        return NULL;
+
+    gStackNumItems--;
+
+    if (expr != NULL) {
         result = expr;
         memcpy(expr, &(gStack[gStackNumItems]), sizeof(*expr));
     }
+
     return result;
 }
 

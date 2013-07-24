@@ -13,11 +13,10 @@ abCalcExprInt.o: abCalcExpr.h abCalcMode.h abCalcExprInt.h
 abCalc.o: abCalc.h abCalcExpr.h abCalcMode.h abCalcExprReal.h abCalcExprInt.h \
          abCalcStack.h abCalcOp.h abCalcError.h
 abCalcMain.o: abCalc.h abCalcStack.h abCalcExpr.h abCalcOp.h abCalcError.h
-abCalcOp.o: abCalcOp.h abCalcOpAdd.h
-abCalcOpAdd.o: abCalcOp.h abCalcOpAdd.h
+abCalcOp.o: abCalcOp.h abCalcError.h abCalcExpr.h abCalcStack.h abCalcOpAdd.h
+abCalcOpAdd.o: abCalcOp.h abCalcError.h abCalcOpAdd.h
 abCalcError.o: abCalcError.h
 
-CFLAGS=-g
 
 $(NAME): $(OBJS)
 	cc -o $(NAME) $(OBJS)

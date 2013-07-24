@@ -8,6 +8,9 @@
 #include <string.h>
 
 #include "abCalcOp.h"
+#include "abCalcExpr.h"
+#include "abCalcError.h"
+#include "abCalcStack.h"
 
 #include "abCalcOpAdd.h"
 
@@ -52,3 +55,5 @@ abCalcOp *abCalcOpLookup(char *name)
 
     return NULL;
 }
+
+
