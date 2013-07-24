@@ -4,6 +4,7 @@ NAME=abCalc
 all: $(NAME)
 
 abCalcExpr.o: abCalcExpr.h
+abCalcExprReal.o: abCalcExpr.h
 abCalcStack.o: abCalcExpr.h abCalcStack.h
 
 $(NAME): $(OBJS)
