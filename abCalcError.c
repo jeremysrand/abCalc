@@ -26,6 +26,8 @@ void abCalcErrorInit(void)
     gErrorStrings[abCalcBadArgValueError] = "Bad Argument Value";
     gErrorStrings[abCalcTooFewArgsError] = "Too Few Arguments";
     gErrorStrings[abCalcStackFullError] = "Stack Full";
+    gErrorStrings[abCalcInfiniteResultError] = "Infinite Result";
+    gErrorStrings[abCalcComplexResultError] = "Complex Result";
 }
 
 

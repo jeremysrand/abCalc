@@ -16,6 +16,8 @@ typedef enum abCalcErrorType {
     abCalcBadArgValueError,
     abCalcTooFewArgsError,
     abCalcStackFullError,
+    abCalcInfiniteResultError,
+    abCalcComplexResultError,
 
     abCalcErrorTypeMax
 } abCalcErrorType;

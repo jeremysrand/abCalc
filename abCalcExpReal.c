@@ -1,5 +1,5 @@
 /* 
-    abCalcExprReal.c
+    abCalcExpReal.c
         By: Jeremy Rand
  */
 

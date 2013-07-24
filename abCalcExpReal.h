@@ -1,11 +1,11 @@
 /* 
-    abCalcExprReal.h
+    abCalcExpReal.h
         By: Jeremy Rand
  */
 
 
-#ifndef ABCALCEXPRREAL_H
-#define ABCALCEXPRREAL_H
+#ifndef ABCALCEXPREAL_H
+#define ABCALCEXPREAL_H
 
 
 void abCalcExprRealInit(void);

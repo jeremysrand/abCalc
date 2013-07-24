@@ -13,6 +13,14 @@
 #include "abCalcStack.h"
 
 #include "abCalcOpAdd.h"
+#include "abCalcOpSubtr.h"
+#include "abCalcOpMult.h"
+#include "abCalcOpDiv.h"
+#include "abCalcOpPower.h"
+#include "abCalcOpAnd.h"
+#include "abCalcOpOr.h"
+#include "abCalcOpXor.h"
+#include "abCalcOpNot.h"
 
 
 #define AB_CALC_MAX_OPS 128
@@ -27,6 +35,14 @@ void abCalcOpInit(void)
     memset(gOps, 0, sizeof(gOps));
 
     abCalcOpAddInit();
+    abCalcOpSubtrInit();
+    abCalcOpMultInit();
+    abCalcOpDivInit();
+    abCalcOpPowerInit();
+    abCalcOpAndInit();
+    abCalcOpOrInit();
+    abCalcOpXorInit();
+    abCalcOpNotInit();
 }
 
 

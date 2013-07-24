@@ -1,12 +1,12 @@
 /* 
-    abCalcOpAdd.c
+    abCalcOpDiv.c
         By: Jeremy Rand
  */
 
 
 #include <stdio.h>
 
-#include "abCalcOpAdd.h"
+#include "abCalcOpDiv.h"
 
 #include "abCalcOp.h"
 #include "abCalcError.h"
@@ -14,19 +14,19 @@
 #include "abCalcStack.h"
 
 
-#define OP_NAME "+"
+#define OP_NAME "/"
 
 
-static void addExecute(void);
+static void divExecute(void);
 
 
-void abCalcOpAddInit(void)
+void abCalcOpDivInit(void)
 {
-    abCalcOpRegister(OP_NAME, addExecute);
+    abCalcOpRegister(OP_NAME, divExecute);
 }
 
 
-void addExecute(void)
+void divExecute(void)
 {
     abCalcExpr result;
     char expr1Real = 0;
@@ -35,7 +35,16 @@ void addExecute(void)
 
     if (expr1->type == abCalcExprTypeReal) {
         expr1Real = 1;
-    } else if (expr1->type != abCalcExprTypeInt) {
+        if (expr1->u.real == 0.0) {
+            abCalcRaiseError(abCalcInfiniteResultError, OP_NAME);
+            return;
+        }
+    } else if (expr1->type == abCalcExprTypeInt) {
+        if (expr1->u.integer == 0l) {
+            abCalcRaiseError(abCalcInfiniteResultError, OP_NAME);
+            return;
+        }
+    } else {
         abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
         return;
     }
@@ -49,16 +58,16 @@ void addExecute(void)
 
     if ((expr1Real) && (expr2Real)) {
         result.type = abCalcExprTypeReal;
-        result.u.real = expr2->u.real + expr1->u.real;
+        result.u.real = expr2->u.real / expr1->u.real;
     } else {
         result.type = abCalcExprTypeInt;
 
         if (expr1Real) {
-            result.u.integer = expr2->u.integer + (abCalcIntType)expr1->u.real;
+            result.u.integer = expr2->u.integer / (abCalcIntType)expr1->u.real;
         } else if (expr2Real) {
-            result.u.integer = (abCalcIntType)expr2->u.real + expr1->u.integer;
+            result.u.integer = (abCalcIntType)expr2->u.real / expr1->u.integer;
         } else {
-            result.u.integer = expr2->u.integer + expr1->u.integer;
+            result.u.integer = expr2->u.integer / expr1->u.integer;
         }
     }
 

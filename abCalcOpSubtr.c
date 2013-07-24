@@ -1,12 +1,12 @@
 /* 
-    abCalcOpAdd.c
+    abCalcOpSubtr.c
         By: Jeremy Rand
  */
 
 
 #include <stdio.h>
 
-#include "abCalcOpAdd.h"
+#include "abCalcOpSubtr.h"
 
 #include "abCalcOp.h"
 #include "abCalcError.h"
@@ -14,19 +14,19 @@
 #include "abCalcStack.h"
 
 
-#define OP_NAME "+"
+#define OP_NAME "-"
 
 
-static void addExecute(void);
+static void subtrExecute(void);
 
 
-void abCalcOpAddInit(void)
+void abCalcOpSubtrInit(void)
 {
-    abCalcOpRegister(OP_NAME, addExecute);
+    abCalcOpRegister(OP_NAME, subtrExecute);
 }
 
 
-void addExecute(void)
+void subtrExecute(void)
 {
     abCalcExpr result;
     char expr1Real = 0;
@@ -49,16 +49,16 @@ void addExecute(void)
 
     if ((expr1Real) && (expr2Real)) {
         result.type = abCalcExprTypeReal;
-        result.u.real = expr2->u.real + expr1->u.real;
+        result.u.real = expr2->u.real - expr1->u.real;
     } else {
         result.type = abCalcExprTypeInt;
 
         if (expr1Real) {
-            result.u.integer = expr2->u.integer + (abCalcIntType)expr1->u.real;
+            result.u.integer = expr2->u.integer - (abCalcIntType)expr1->u.real;
         } else if (expr2Real) {
-            result.u.integer = (abCalcIntType)expr2->u.real + expr1->u.integer;
+            result.u.integer = (abCalcIntType)expr2->u.real - expr1->u.integer;
         } else {
-            result.u.integer = expr2->u.integer + expr1->u.integer;
+            result.u.integer = expr2->u.integer - expr2->u.integer;
         }
     }
 
