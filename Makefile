@@ -3,6 +3,9 @@ NAME=abCalc
 
 all: $(NAME)
 
+abCalcExpr.o: abCalcExpr.h
+abCalcStack.o: abCalcExpr.h abCalcStack.h
+
 $(NAME): $(OBJS)
 	cc -o $(NAME) $(OBJS)
 

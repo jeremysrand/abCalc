@@ -5,8 +5,11 @@
 
 
 typedef enum abCalcExprType {
-    abCalcExprTypeReal,
-    abCalcExprTypeInt
+    abCalcExprTypeMin = 0,
+    abCalcExprTypeReal = 0,
+    abCalcExprTypeInt,
+
+    abCalcExprTypeMax
 } abCalcExprType;
 
 
@@ -24,5 +27,13 @@ typedef struct abCalcExpr {
 
 
 typedef struct abCalcExprCallbacks {
-    abCalcExpr * (*parseExpression)(abCalcExpr *expr, char *buffer);
+    abCalcExpr * (*parseExpr)(abCalcExpr *expr, char *buffer);
+    char * (*formatExpr)(abCalcExpr *expr, char *buffer);
 } abCalcExprCallbacks;
+
+
+void abCalcExprInit(void);
+void abCalcRegisterExprType(abCalcExprType type, abCalcExprCallbacks *callbacks);
+
+abCalcExpr *abCalcParseExpr(abCalcExpr *expr, char *buffer);
+char *abCalcFormatExpr(abCalcExpr *expr, char *buffer);
