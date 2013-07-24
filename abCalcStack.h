@@ -16,7 +16,7 @@ abCalcExpr *abCalcStackExprPush(abCalcExpr *expr);
 
 abCalcExpr *abCalcStackExprPop(abCalcExpr *expr);
 
-abCalcExpr *abCalcStackExprAt(abCalcExpr *expr, int depth);
+abCalcExpr *abCalcStackExprAt(int depth);
 
 int abCalcStackNumItems(void);
 

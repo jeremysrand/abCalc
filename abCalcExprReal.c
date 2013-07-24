@@ -4,6 +4,7 @@
  */
 
 
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -101,6 +102,17 @@ abCalcExpr *abCalcExprRealParse(abCalcExpr *expr, char *buffer)
 
 char *abCalcExprRealFormat(abCalcExpr *expr, char *buffer)
 {
+	abCalcRealType exp;
+	abCalcRealType value;
+    char format[16];
+    int numDecDigits;
+	int periodPos = -1;
+	int zerosStart = -1;
+	int spaceStart = -1;
+	int expPos = -1;
+    int len;
+    int i;
+
     if (expr == NULL)
         return NULL;
 
@@ -110,6 +122,86 @@ char *abCalcExprRealFormat(abCalcExpr *expr, char *buffer)
     if (expr->type != abCalcExprTypeReal)
         return NULL;
 
-    sprintf(buffer, "%f", expr->u.real);
+    value = expr->u.real;
+
+	if (value == 0.0) {
+		exp = 0.0;
+	} else {
+		exp = floor(log10(fabs(value)));
+	}
+	
+	if (exp >= 0)
+		exp++;
+	
+	if ((exp > 12) ||
+		(exp < -12)) {
+		strcpy(format, "%-25.11E");
+	} else if (exp <= -2) {
+		double shiftedValue = value * 1.0e12;
+		if (shiftedValue == floor(shiftedValue)) {
+			strcpy(format, "%-18.12f");
+		} else {
+			strcpy(format, "%-25.11E");
+		}
+	} else {
+		int numDecDigits = (int)(12 - exp);
+		if (numDecDigits > 12) {
+			numDecDigits = 12;
+		}
+		sprintf(format, "%%-28.%df", numDecDigits);
+	}
+
+    sprintf(buffer, format, value);
+    len = strlen(buffer);
+
+	for (i = 0; i < len; i++) {
+		switch (buffer[i]) {
+			case '.':
+				periodPos = i;
+				break;
+
+			case '0':
+				if (expPos != -1) {
+					break;
+				}
+				if ((periodPos != -1) &&
+					(zerosStart == -1)) {
+					if (periodPos == i - 1) {
+						zerosStart = periodPos;
+					} else {
+						zerosStart = i;
+					}
+				}
+				break;
+			case 'E':
+				expPos = i;
+				break;
+			case ' ':
+				spaceStart = i;
+				break;
+			default:
+				if (expPos == -1)
+					zerosStart = -1;
+				break;
+		}
+		if (spaceStart != -1)
+			break;
+	}
+	
+	if (spaceStart != -1) {
+        buffer[spaceStart] = '\0';
+        len = spaceStart;
+	}
+	
+	if (zerosStart != -1) {
+		if (expPos != -1) {
+            memmove(&buffer[zerosStart], &buffer[expPos], len - expPos + 1);
+			len = expPos - zerosStart;
+        }
+		else {
+			buffer[zerosStart] = '\0';
+        }
+	}
+	
     return buffer;
 }

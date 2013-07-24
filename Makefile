@@ -8,7 +8,10 @@ abCalcExprReal.o: abCalcExpr.h abCalcExprReal.h
 abCalcStack.o: abCalcExpr.h abCalcStack.h
 abCalcMode.o: abCalcMode.h abCalcExpr.h
 abCalcExprInt.o: abCalcExpr.h abCalcMode.h abCalcExprInt.h
-abCalc.o: abCalcExpr.h abCalcMode.h abCalcExprReal.h abCalcExprInt.h abCalcStack.h
+abCalc.o: abCalc.h abCalcExpr.h abCalcMode.h abCalcExprReal.h abCalcExprInt.h abCalcStack.h
+abCalcMain.o: abCalc.h abCalcStack.h abCalcExpr.h
+
+CFLAGS=-g
 
 $(NAME): $(OBJS)
 	cc -o $(NAME) $(OBJS)

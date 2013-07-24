@@ -54,11 +54,10 @@ int abCalcStackNumItems(void)
 }
 
 
-abCalcExpr *abCalcStackExprAt(abCalcExpr *expr, int depth)
+abCalcExpr *abCalcStackExprAt(int depth)
 {
     abCalcExpr *result = NULL;
-    if ((depth < gStackNumItems) &&
-        (expr != NULL)) {
+    if (depth < gStackNumItems) {
         result = &(gStack[gStackNumItems - 1 - depth]);
     }
 
