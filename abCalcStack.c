@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "abCalcStack.h"
+#include "abCalcError.h"
 
 
 #define AB_CALC_STACK_DEPTH 128
@@ -25,6 +26,12 @@ void abCalcStackInit(void)
 abCalcExpr *abCalcStackExprPush(abCalcExpr *expr)
 {
     abCalcExpr *result = NULL;
+
+    if (gStackNumItems >= AB_CALC_STACK_DEPTH) {
+        abCalcRaiseError(abCalcStackFullError, NULL);
+        return NULL;
+    }
+
     if ((gStackNumItems < AB_CALC_STACK_DEPTH) &&
         (expr != NULL)) {
         result = &(gStack[gStackNumItems]);

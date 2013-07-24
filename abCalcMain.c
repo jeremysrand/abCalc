@@ -11,6 +11,8 @@
 #include "abCalc.h"
 #include "abCalcExpr.h"
 #include "abCalcStack.h"
+#include "abCalcOp.h"
+#include "abCalcError.h"
 
 
 char gBuffer[AB_CALC_EXPR_STRING_MAX];
@@ -23,6 +25,8 @@ int main(void)
     int depth;
     int item;
     int len;
+    abCalcOp *op;
+    char *errorString;
 
     abCalcInit();
 
@@ -39,6 +43,12 @@ int main(void)
             }
         }
 
+        errorString = abCalcGetError();
+        if (errorString != NULL) {
+            printf("\n   %s\n", errorString);
+            abCalcClearError();
+        }
+
         timeToQuit = 1;
         if (fgets(gBuffer, sizeof(gBuffer), stdin) != NULL) {
             len = strlen(gBuffer);
@@ -47,9 +57,14 @@ int main(void)
                 gBuffer[len - 1] = '\0';
             }
 
-            if ((abCalcParseExpr(&gExpr, gBuffer) != NULL) &&
-                (abCalcStackExprPush(&gExpr) != NULL)) {
-                timeToQuit = 0;
+            op = abCalcOpLookup(gBuffer);
+
+            if (op != NULL) {
+                op->execute();
+            } else if (abCalcParseExpr(&gExpr, gBuffer) != NULL) {
+                abCalcStackExprPush(&gExpr);
+            } else {
+                abCalcRaiseError(abCalcSyntaxError, NULL);
             }
         }
     }

@@ -9,6 +9,8 @@
 #include "abCalcExprReal.h"
 #include "abCalcMode.h"
 #include "abCalcStack.h"
+#include "abCalcOp.h"
+#include "abCalcError.h"
 
 
 void abCalcInit(void)
@@ -19,6 +21,10 @@ void abCalcInit(void)
 
     abCalcModeInit();
     abCalcStackInit();
+
+    abCalcOpInit();
+
+    abCalcErrorInit();
 }
 
 
