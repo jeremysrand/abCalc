@@ -21,15 +21,25 @@ static abCalcExprCallbacks gCallbacks = {
 };
 
 
+void abCalcExprRealInit(void)
+{
+    abCalcRegisterExprType(abCalcExprTypeReal, &gCallbacks);
+}
+
+
 abCalcExpr *abCalcExprRealParse(abCalcExpr *expr, char *buffer)
 {
     int offset;
     int expOffset = -1;
     int periodOffset = -1;
     int len;
+    int numOffset = -1;
 
     /* First validate */
     if (buffer == NULL)
+        return NULL;
+
+    if (expr == NULL)
         return NULL;
 
     len = strlen(buffer);
@@ -46,10 +56,13 @@ abCalcExpr *abCalcExprRealParse(abCalcExpr *expr, char *buffer)
             case '7':
             case '8':
             case '9':
+                numOffset = offset;
                 break;
 
             case '.':
                 if (periodOffset != -1)
+                    return NULL;
+                if (expOffset != -1)
                     return NULL;
                 periodOffset = offset;
                 break;
@@ -69,12 +82,16 @@ abCalcExpr *abCalcExprRealParse(abCalcExpr *expr, char *buffer)
                 if (expOffset != -1)
                     return NULL;
                 expOffset = offset;
+                numOffset = -1;
                 break;
 
             default:
                 return NULL;
         }
     }
+
+    if (numOffset == -1)
+        return NULL;
     
     expr->type = abCalcExprTypeReal;
     expr->u.real = atof(buffer);

@@ -7,6 +7,7 @@ abCalcExpr.o: abCalcExpr.h
 abCalcExprReal.o: abCalcExpr.h abCalcExprReal.h
 abCalcStack.o: abCalcExpr.h abCalcStack.h
 abCalcMode.o: abCalcMode.h abCalcExpr.h
+abCalcExprInt.o: abCalcExpr.h abCalcMode.h abCalcExprInt.h
 
 $(NAME): $(OBJS)
 	cc -o $(NAME) $(OBJS)

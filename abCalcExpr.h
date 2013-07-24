@@ -4,6 +4,10 @@
  */
 
 
+#ifndef ABCALCEXPR_H
+#define ABCALCEXPR_H
+
+
 typedef enum abCalcExprType {
     abCalcExprTypeMin = 0,
     abCalcExprTypeReal = 0,
@@ -15,6 +19,11 @@ typedef enum abCalcExprType {
 
 typedef double abCalcRealType;
 typedef unsigned long abCalcIntType;
+
+
+#define AB_CALC_EXPR_MAX_INT_WIDTH ((sizeof(abCalcIntType) * 8))
+
+#define AB_CALC_EXPR_STRING_MAX (AB_CALC_EXPR_MAX_INT_WIDTH + 4)
 
 
 typedef struct abCalcExpr {
@@ -37,3 +46,6 @@ void abCalcRegisterExprType(abCalcExprType type, abCalcExprCallbacks *callbacks)
 
 abCalcExpr *abCalcParseExpr(abCalcExpr *expr, char *buffer);
 char *abCalcFormatExpr(abCalcExpr *expr, char *buffer);
+
+
+#endif

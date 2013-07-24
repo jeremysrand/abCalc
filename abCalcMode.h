@@ -4,6 +4,10 @@
  */
 
 
+#ifndef ABCALCMODE_H
+#define ABCALCMODE_H
+
+
 #include "abCalcExpr.h"
 
 
@@ -19,9 +23,6 @@ typedef enum abCalcModeIntBase
 } abCalcModeIntBase;
 
 
-#define AB_CALC_MODE_MAX_INT_WIDTH ((sizeof(abCalcIntType) * 8))
-
-
 void abCalcModeInit(void);
 
 abCalcModeIntBase abCalcModeGetBase(void);
@@ -31,3 +32,6 @@ void abCalcModeSetBase(abCalcModeIntBase base);
 int abCalcModeGetIntWidth(void);
 
 void abCalcModeSetIntWidth(int width);
+
+
+#endif
