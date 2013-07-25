@@ -9,10 +9,12 @@
 #include <stdlib.h>
 
 #include "abCalc.h"
-#include "abCExpr.h"
 #include "abCStack.h"
-#include "abCOp.h"
 #include "abCError.h"
+
+#include "expr/abCExpr.h"
+
+#include "ops/abCOp.h"
 
 
 char gBuffer[AB_CALC_EXPR_STRING_MAX];

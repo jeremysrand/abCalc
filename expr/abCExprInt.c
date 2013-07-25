@@ -8,8 +8,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "abCExpr.h"
 #include "abCMode.h"
+
+#include "expr/abCExpr.h"
 
 
 static abCalcExpr *abCalcExprIntParse(abCalcExpr *expr, char *buffer);

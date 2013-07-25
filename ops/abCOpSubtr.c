@@ -6,14 +6,15 @@
 
 #include <stdio.h>
 
-#include "abCOpSubtr.h"
-
-#include "abCOp.h"
 #include "abCError.h"
-#include "abCExpr.h"
-#include "abCExpReal.h"
-#include "abCExprInt.h"
 #include "abCStack.h"
+
+#include "expr/abCExpr.h"
+#include "expr/abCExpReal.h"
+#include "expr/abCExprInt.h"
+
+#include "ops/abCOp.h"
+#include "ops/abCOpSubtr.h"
 
 
 #define OP_NAME "-"

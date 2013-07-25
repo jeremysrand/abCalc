@@ -1,6 +1,6 @@
 NAME=abCalc
 
-CFLAGS=-Iexpr -Iops -I.
+CFLAGS=-I.
 
 all: $(NAME)
 

@@ -6,13 +6,14 @@
 
 #include <stdio.h>
 
-#include "abCOpRcws.h"
-
-#include "abCOp.h"
-#include "abCExpr.h"
-#include "abCExpReal.h"
 #include "abCStack.h"
 #include "abCMode.h"
+
+#include "expr/abCExpr.h"
+#include "expr/abCExpReal.h"
+
+#include "ops/abCOp.h"
+#include "ops/abCOpRcws.h"
 
 
 #define OP_NAME "RCWS"

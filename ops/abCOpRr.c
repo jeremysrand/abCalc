@@ -6,14 +6,15 @@
 
 #include <stdio.h>
 
-#include "abCOpRr.h"
-
-#include "abCOp.h"
 #include "abCError.h"
-#include "abCExpr.h"
-#include "abCExprInt.h"
 #include "abCMode.h"
 #include "abCStack.h"
+
+#include "expr/abCExpr.h"
+#include "expr/abCExprInt.h"
+
+#include "ops/abCOp.h"
+#include "ops/abCOpRr.h"
 
 
 #define OP_NAME "RR"

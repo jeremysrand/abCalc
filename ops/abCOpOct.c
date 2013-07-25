@@ -6,10 +6,10 @@
 
 #include <stdio.h>
 
-#include "abCOpOct.h"
-
-#include "abCOp.h"
 #include "abCMode.h"
+
+#include "ops/abCOp.h"
+#include "ops/abCOpOct.h"
 
 
 #define OP_NAME "OCT"

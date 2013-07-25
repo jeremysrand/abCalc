@@ -1,10 +1,14 @@
-OBJS=abCalc.o expr/abCExpr.o expr/abCExpReal.o expr/abCExprInt.o abCStack.o \
-    abCMode.o abCMain.o ops/abCOp.o abCError.o ops/abCOpAdd.o \
-    ops/abCOpSubtr.o ops/abCOpMult.o ops/abCOpDiv.o ops/abCOpPower.o \
-    ops/abCOpAnd.o ops/abCOpOr.o ops/abCOpXor.o ops/abCOpNot.o \
-    ops/abCOpBin.o ops/abCOpOct.o ops/abCOpDec.o ops/abCOpHex.o ops/abCOpStws.o \
-    ops/abCOpRcws.o ops/abCOpSl.o ops/abCOpRl.o ops/abCOpSr.o ops/abCOpRr.o \
-    ops/abCOpAsr.o
+CALC_OBJS=abCalc.o abCStack.o abCMode.o abCError.o
+
+EXPR_OBJS=expr/abCExpr.o expr/abCExpReal.o expr/abCExprInt.o
+
+OPS_OBJS=ops/abCOp.o ops/abCOpAdd.o ops/abCOpSubtr.o ops/abCOpMult.o \
+    ops/abCOpDiv.o ops/abCOpPower.o ops/abCOpAnd.o ops/abCOpOr.o ops/abCOpXor.o \
+    ops/abCOpNot.o ops/abCOpBin.o ops/abCOpOct.o ops/abCOpDec.o ops/abCOpHex.o \
+    ops/abCOpStws.o ops/abCOpRcws.o ops/abCOpSl.o ops/abCOpRl.o ops/abCOpSr.o \
+    ops/abCOpRr.o ops/abCOpAsr.o
+
+OBJS=abCMain.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
 
 abCMain.o: abCalc.h abCStack.h expr/abCExpr.h ops/abCOp.h abCError.h
 

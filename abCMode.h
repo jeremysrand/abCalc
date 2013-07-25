@@ -8,7 +8,7 @@
 #define ABCMODE_H
 
 
-#include "abCExpr.h"
+#include "expr/abCExpr.h"
 
 
 typedef enum abCalcModeIntBase

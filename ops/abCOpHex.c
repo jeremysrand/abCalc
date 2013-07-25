@@ -6,10 +6,10 @@
 
 #include <stdio.h>
 
-#include "abCOpHex.h"
-
-#include "abCOp.h"
 #include "abCMode.h"
+
+#include "ops/abCOp.h"
+#include "ops/abCOpHex.h"
 
 
 #define OP_NAME "HEX"

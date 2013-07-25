@@ -6,13 +6,14 @@
 
 #include <stdio.h>
 
-#include "abCOpStws.h"
-
-#include "abCOp.h"
-#include "abCExpr.h"
 #include "abCError.h"
 #include "abCStack.h"
 #include "abCMode.h"
+
+#include "expr/abCExpr.h"
+
+#include "ops/abCOp.h"
+#include "ops/abCOpStws.h"
 
 
 #define OP_NAME "STWS"

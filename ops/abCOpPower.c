@@ -7,13 +7,14 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "abCOpPower.h"
-
-#include "abCOp.h"
 #include "abCError.h"
-#include "abCExpr.h"
-#include "abCExpReal.h"
 #include "abCStack.h"
+
+#include "expr/abCExpr.h"
+#include "expr/abCExpReal.h"
+
+#include "ops/abCOp.h"
+#include "ops/abCOpPower.h"
 
 
 #define OP_NAME "^"

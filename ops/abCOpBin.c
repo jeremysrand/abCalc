@@ -6,10 +6,10 @@
 
 #include <stdio.h>
 
-#include "abCOpBin.h"
-
-#include "abCOp.h"
 #include "abCMode.h"
+
+#include "ops/abCOp.h"
+#include "ops/abCOpBin.h"
 
 
 #define OP_NAME "BIN"

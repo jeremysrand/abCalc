@@ -7,33 +7,35 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "abCOp.h"
-#include "abCExpr.h"
 #include "abCError.h"
 #include "abCStack.h"
 
-#include "abCOpAdd.h"
-#include "abCOpSubtr.h"
-#include "abCOpMult.h"
-#include "abCOpDiv.h"
-#include "abCOpPower.h"
+#include "expr/abCExpr.h"
 
-#include "abCOpAnd.h"
-#include "abCOpOr.h"
-#include "abCOpXor.h"
-#include "abCOpNot.h"
-#include "abCOpSl.h"
-#include "abCOpRl.h"
-#include "abCOpSr.h"
-#include "abCOpRr.h"
-#include "abCOpAsr.h"
+#include "ops/abCOp.h"
 
-#include "abCOpBin.h"
-#include "abCOpOct.h"
-#include "abCOpDec.h"
-#include "abCOpHex.h"
-#include "abCOpStws.h"
-#include "abCOpRcws.h"
+#include "ops/abCOpAdd.h"
+#include "ops/abCOpSubtr.h"
+#include "ops/abCOpMult.h"
+#include "ops/abCOpDiv.h"
+#include "ops/abCOpPower.h"
+
+#include "ops/abCOpAnd.h"
+#include "ops/abCOpOr.h"
+#include "ops/abCOpXor.h"
+#include "ops/abCOpNot.h"
+#include "ops/abCOpSl.h"
+#include "ops/abCOpRl.h"
+#include "ops/abCOpSr.h"
+#include "ops/abCOpRr.h"
+#include "ops/abCOpAsr.h"
+
+#include "ops/abCOpBin.h"
+#include "ops/abCOpOct.h"
+#include "ops/abCOpDec.h"
+#include "ops/abCOpHex.h"
+#include "ops/abCOpStws.h"
+#include "ops/abCOpRcws.h"
 
 
 #define AB_CALC_MAX_OPS 128
