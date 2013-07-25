@@ -4,6 +4,8 @@ all: $(NAME)
 
 .INCLUDE: "Make.engine"
 
+CFLAGS=-D ABCALC_GSOS
+
 $(NAME): fixtype $(OBJS)
 	occ -o $(NAME) $(OBJS)
 
@@ -19,4 +21,4 @@ fixtype:
 	chtyp -l CC ops/*.c ops/*.h
 
 %.o: %.c
-	occ -c $<
+	occ $(CFLAGS) -c $<

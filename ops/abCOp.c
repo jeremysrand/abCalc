@@ -92,7 +92,11 @@ abCalcOp *abCalcOpLookup(char *name)
     int i;
 
     for (i = 0; i < gNumOps; i++) {
-        if (strcmp(gOps[i].name, name) == 0) {
+#ifdef ABCALC_GSOS
+        if (stricmp(gOps[i].name, name) == 0) {
+#else
+        if (strcasecmp(gOps[i].name, name) == 0) {
+#endif
             return &gOps[i];
         }
     }
