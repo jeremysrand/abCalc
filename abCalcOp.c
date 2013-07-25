@@ -27,6 +27,8 @@
 #include "abCalcOpOct.h"
 #include "abCalcOpDec.h"
 #include "abCalcOpHex.h"
+#include "abCalcOpStws.h"
+#include "abCalcOpRcws.h"
 
 
 #define AB_CALC_MAX_OPS 128
@@ -55,6 +57,8 @@ void abCalcOpInit(void)
     abCalcOpOctInit();
     abCalcOpDecInit();
     abCalcOpHexInit();
+    abCalcOpStwsInit();
+    abCalcOpRcwsInit();
 }
 
 
