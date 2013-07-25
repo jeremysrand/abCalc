@@ -15,8 +15,10 @@ CFLAGS=-D ABCALC_GSOS
 $(SHELL_NAME): fixtype $(SHELL_OBJS)
 	occ -o $(SHELL_NAME) $(SHELL_OBJS)
 
-$(NDA_NAME): fixtype $(NDA_OBJS)
-
+$(NDA_NAME): fixtype $(NDA_OBJS) $(NDA_NAME).r
+	cp $(NDA_NAME).r $(NDA_NAME)
+	occ -o $(NDA_NAME) $(NDA_OBJS)
+	chtyp -t nda $(NDA_NAME)
 
 clean:
 	cp -p rm -f $(SHELL_NAME) $(SHELL_OBJS) $(SHELL_NAME).root
@@ -32,3 +34,6 @@ fixtype:
 
 %.o: %.c
 	occ $(CFLAGS) -c $<
+
+%.r: %.rez
+	compile $< keep=$@
