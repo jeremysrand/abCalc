@@ -1,0 +1,46 @@
+OBJS=abCalc.o expr/abCExpr.o expr/abCExpReal.o expr/abCExprInt.o abCStack.o \
+    abCMode.o abCMain.o ops/abCOp.o abCError.o ops/abCOpAdd.o \
+    ops/abCOpSubtr.o ops/abCOpMult.o ops/abCOpDiv.o ops/abCOpPower.o \
+    ops/abCOpAnd.o ops/abCOpOr.o ops/abCOpXor.o ops/abCOpNot.o \
+    ops/abCOpBin.o ops/abCOpOct.o ops/abCOpDec.o ops/abCOpHex.o ops/abCOpStws.o \
+    ops/abCOpRcws.o ops/abCOpSl.o ops/abCOpRl.o ops/abCOpSr.o ops/abCOpRr.o \
+    ops/abCOpAsr.o
+
+abCMain.o: abCalc.h abCStack.h expr/abCExpr.h ops/abCOp.h abCError.h
+
+abCalc.o: abCalc.h expr/abCExpr.h abCMode.h expr/abCExpReal.h expr/abCExprInt.h \
+    abCStack.h ops/abCOp.h abCError.h
+abCStack.o: expr/abCExpr.h abCStack.h abCError.h
+abCMode.o: abCMode.h expr/abCExpr.h
+abCError.o: abCError.h
+
+expr/abCExpr.o: expr/abCExpr.h
+expr/abCExpReal.o: expr/abCExpr.h expr/abCExpReal.h
+expr/abCExprInt.o: expr/abCExpr.h abCMode.h expr/abCExprInt.h
+
+ops/abCOp.o: ops/abCOp.h abCError.h expr/abCExpr.h abCStack.h ops/abCOpAdd.h \
+    ops/abCOpSubtr.h ops/abCOpMult.h ops/abCOpDiv.h ops/abCOpPower.h \
+    ops/abCOpAnd.h ops/abCOpOr.h ops/abCOpXor.h ops/abCOpNot.h ops/abCOpBin.h \
+    ops/abCOpOct.h ops/abCOpDec.h ops/abCOpHex.h ops/abCOpStws.h ops/abCOpRcws.h \
+    ops/abCOpSl.h ops/abCOpRl.h ops/abCOpSr.h ops/abCOpRr.h ops/abCOpAsr.h
+ops/abCOpAdd.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h abCStack.h ops/abCOpAdd.h
+ops/abCOpSubtr.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h abCStack.h ops/abCOpSubtr.h
+ops/abCOpMult.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h abCStack.h ops/abCOpMult.h
+ops/abCOpDiv.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h abCStack.h ops/abCOpDiv.h
+ops/abCOpPower.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExpReal.h abCStack.h ops/abCOpPower.h
+ops/abCOpAnd.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExprInt.h abCStack.h ops/abCOpAnd.h
+ops/abCOpOr.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExprInt.h abCStack.h ops/abCOpOr.h
+ops/abCOpXor.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExprInt.h abCStack.h ops/abCOpXor.h
+ops/abCOpNot.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExprInt.h abCStack.h ops/abCOpNot.h
+ops/abCOpBin.o: ops/abCOp.h abCMode.h ops/abCOpBin.h
+ops/abCOpOct.o: ops/abCOp.h abCMode.h ops/abCOpOct.h
+ops/abCOpDec.o: ops/abCOp.h abCMode.h ops/abCOpDec.h
+ops/abCOpHex.o: ops/abCOp.h abCMode.h ops/abCOpHex.h
+ops/abCOpStws.o: ops/abCOp.h abCMode.h abCStack.h expr/abCExpr.h abCError.h ops/abCOpStws.h
+ops/abCOpRcws.o: ops/abCOp.h abCMode.h abCStack.h expr/abCExpr.h expr/abCExpReal.h ops/abCOpRcws.h
+ops/abCOpSl.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExprInt.h ops/abCOpSl.h
+ops/abCOpRl.o: ops/abCOp.h abCMode.h abCError.h abCStack.h expr/abCExpr.h expr/abCExprInt.h ops/abCOpRl.h
+ops/abCOpSr.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExprInt.h ops/abCOpSr.h
+ops/abCOpRr.o: ops/abCOp.h abCMode.h abCError.h abCStack.h expr/abCExpr.h expr/abCExprInt.h ops/abCOpRr.h
+ops/abCOpAsr.o: ops/abCOp.h abCMode.h abCError.h abCStack.h expr/abCExpr.h expr/abCExprInt.h ops/abCOpAsr.h
+

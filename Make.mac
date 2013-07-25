@@ -1,0 +1,13 @@
+NAME=abCalc
+
+CFLAGS=-Iexpr -Iops -I.
+
+all: $(NAME)
+
+include Make.engine
+
+$(NAME): $(OBJS)
+	cc -o $(NAME) $(OBJS)
+
+clean:
+	rm -f $(NAME) $(OBJS)

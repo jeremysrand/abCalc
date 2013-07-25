@@ -4,13 +4,13 @@
  */
 
 
-#include "abCalcExpr.h"
-#include "abCalcExprInt.h"
-#include "abCalcExpReal.h"
-#include "abCalcMode.h"
-#include "abCalcStack.h"
-#include "abCalcOp.h"
-#include "abCalcError.h"
+#include "abCExpr.h"
+#include "abCExprInt.h"
+#include "abCExpReal.h"
+#include "abCMode.h"
+#include "abCStack.h"
+#include "abCOp.h"
+#include "abCError.h"
 
 
 void abCalcInit(void)
