@@ -1,1 +1,6 @@
 .*.swp
+*.o
+*.r
+*.root
+abCalc
+abCalcNDA
