@@ -201,7 +201,7 @@ char *abCalcExprIntFormat(abCalcExpr *expr, char *buffer)
         case abCalcModeBinBase:
 		    gotFirstOne = 0;
             ptr = buffer;
-            *ptr = '*';
+            *ptr = '#';
             ptr++;
 		
 		    for (i = width - 1; i >= 0; i--) {
@@ -220,19 +220,23 @@ char *abCalcExprIntFormat(abCalcExpr *expr, char *buffer)
                 *ptr = '0';
                 ptr++;
             }
+            *ptr = ' ';
+            ptr++;
+            *ptr = 'b';
+            ptr++;
             *ptr = '\0';
             break;
             
         case abCalcModeOctBase:
-            sprintf(buffer, "#%lo", value);
+            sprintf(buffer, "#%lo o", value);
             break;
 
         case abCalcModeDecBase:
-            sprintf(buffer, "#%lu", value);
+            sprintf(buffer, "#%lu d", value);
             break;
 
         case abCalcModeHexBase:
-            sprintf(buffer, "#%lX", value);
+            sprintf(buffer, "#%lX h", value);
             break;
 
         default:

@@ -23,7 +23,7 @@ typedef unsigned long abCalcIntType;
 
 #define AB_CALC_EXPR_MAX_INT_WIDTH ((sizeof(abCalcIntType) * 8))
 
-#define AB_CALC_EXPR_STRING_MAX (AB_CALC_EXPR_MAX_INT_WIDTH + 4)
+#define AB_CALC_EXPR_STRING_MAX (AB_CALC_EXPR_MAX_INT_WIDTH + 8)
 
 
 typedef struct abCalcExpr {

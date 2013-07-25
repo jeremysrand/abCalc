@@ -17,10 +17,16 @@
 #include "abCalcOpMult.h"
 #include "abCalcOpDiv.h"
 #include "abCalcOpPower.h"
+
 #include "abCalcOpAnd.h"
 #include "abCalcOpOr.h"
 #include "abCalcOpXor.h"
 #include "abCalcOpNot.h"
+
+#include "abCalcOpBin.h"
+#include "abCalcOpOct.h"
+#include "abCalcOpDec.h"
+#include "abCalcOpHex.h"
 
 
 #define AB_CALC_MAX_OPS 128
@@ -39,10 +45,16 @@ void abCalcOpInit(void)
     abCalcOpMultInit();
     abCalcOpDivInit();
     abCalcOpPowerInit();
+
     abCalcOpAndInit();
     abCalcOpOrInit();
     abCalcOpXorInit();
     abCalcOpNotInit();
+
+    abCalcOpBinInit();
+    abCalcOpOctInit();
+    abCalcOpDecInit();
+    abCalcOpHexInit();
 }
 
 
