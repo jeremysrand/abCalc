@@ -1,16 +1,26 @@
-NAME=abCalc
+#
+# Makefile
+#    By: Jeremy Rand
+#
 
-all: $(NAME)
+SHELL_NAME=abCalc
+NDA_NAME=abCalcNDA
+
+all: $(SHELL_NAME) $(NDA_NAME)
 
 .INCLUDE: "Make.engine"
 
 CFLAGS=-D ABCALC_GSOS
 
-$(NAME): fixtype $(OBJS)
-	occ -o $(NAME) $(OBJS)
+$(SHELL_NAME): fixtype $(SHELL_OBJS)
+	occ -o $(SHELL_NAME) $(SHELL_OBJS)
+
+$(NDA_NAME): fixtype $(NDA_OBJS)
+
 
 clean:
-	cp -p rm -f $(NAME) $(OBJS) $(NAME).r $(NAME).root
+	cp -p rm -f $(SHELL_NAME) $(SHELL_OBJS) $(SHELL_NAME).root
+	cp -p rm -f $(NDA_NAME) $(NDA_OBJS) $(NDA_NAME).r $(NDA_NAME).root
 	cp -p rm -f *.root
 	cp -p rm -f expr/*.root
 	cp -p rm -f ops/*.root

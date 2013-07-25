@@ -1,0 +1,7 @@
+/* 
+    abCalcNDA.defs
+        By: Jeremy Rand
+ */
+
+#define ABCALC_WINDOW_NUM 1001
+#define ABCALC_LINED_COLORS 1002

@@ -1,3 +1,9 @@
+#
+# Make.engine
+#    By: Jeremy Rand
+#
+
+
 CALC_OBJS=abCalc.o abCStack.o abCMode.o abCError.o
 
 EXPR_OBJS=expr/abCExpr.o expr/abCExpReal.o expr/abCExprInt.o
@@ -8,7 +14,9 @@ OPS_OBJS=ops/abCOp.o ops/abCOpAdd.o ops/abCOpSubtr.o ops/abCOpMult.o \
     ops/abCOpStws.o ops/abCOpRcws.o ops/abCOpSl.o ops/abCOpRl.o ops/abCOpSr.o \
     ops/abCOpRr.o ops/abCOpAsr.o
 
-OBJS=abCMain.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
+SHELL_OBJS=abCMain.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
+
+NDA_OBJS=abCNDA.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
 
 abCMain.o: abCalc.h abCStack.h expr/abCExpr.h ops/abCOp.h abCError.h
 

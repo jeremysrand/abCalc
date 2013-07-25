@@ -1,3 +1,8 @@
+#
+# Make.mac
+#    By: Jeremy Rand
+#
+
 NAME=abCalc
 
 CFLAGS=-I.
@@ -6,8 +11,8 @@ all: $(NAME)
 
 include Make.engine
 
-$(NAME): $(OBJS)
-	cc -o $(NAME) $(OBJS)
+$(NAME): $(SHELL_OBJS)
+	cc -o $(NAME) $(SHELL_OBJS)
 
 clean:
-	rm -f $(NAME) $(OBJS)
+	rm -f $(NAME) $(SHELL_OBJS)
