@@ -1,35 +1,38 @@
 /* 
-    abCalcOpNot.c
+    abCalcOpAsr.c
         By: Jeremy Rand
  */
 
 
 #include <stdio.h>
 
-#include "abCalcOpNot.h"
+#include "abCalcOpAsr.h"
 
 #include "abCalcOp.h"
 #include "abCalcError.h"
 #include "abCalcExpr.h"
 #include "abCalcExprInt.h"
+#include "abCalcMode.h"
 #include "abCalcStack.h"
 
 
-#define OP_NAME "NOT"
+#define OP_NAME "ASR"
 
 
-static void notExecute(void);
+static void asrExecute(void);
 
 
-void abCalcOpNotInit(void)
+void abCalcOpAsrInit(void)
 {
-    abCalcOpRegister(OP_NAME, notExecute);
+    abCalcOpRegister(OP_NAME, asrExecute);
 }
 
 
-void notExecute(void)
+void asrExecute(void)
 {
     abCalcExpr result;
+    int width;
+    abCalcIntType upperBit;
     AB_CALC_OP_ONE_ARG(OP_NAME);
 
     if (expr->type != abCalcExprTypeInt) {
@@ -37,7 +40,10 @@ void notExecute(void)
         return;
     }
 
-    abCalcExprIntSet(&result, ~(expr->u.integer));
+	width = abCalcModeGetIntWidth();
+	upperBit = (expr->u.integer & (1 << (width - 1)));
+	
+    abCalcExprIntSet(&result, ((expr->u.integer >> 1) | upperBit));
 
     abCalcStackExprPop(NULL);
     abCalcStackExprPush(&result);

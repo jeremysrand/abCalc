@@ -10,6 +10,7 @@
 
 #include "abCalcOp.h"
 #include "abCalcExpr.h"
+#include "abCalcExpReal.h"
 #include "abCalcStack.h"
 #include "abCalcMode.h"
 
@@ -30,8 +31,7 @@ void rcwsExecute(void)
 {
     abCalcExpr result;
 
-    result.type = abCalcExprTypeReal;
-    result.u.real = abCalcModeGetIntWidth();
+    abCalcExprRealSet(&result, (abCalcRealType)abCalcModeGetIntWidth());
 
     abCalcStackExprPush(&result);
 }

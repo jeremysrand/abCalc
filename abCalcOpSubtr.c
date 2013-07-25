@@ -11,6 +11,8 @@
 #include "abCalcOp.h"
 #include "abCalcError.h"
 #include "abCalcExpr.h"
+#include "abCalcExpReal.h"
+#include "abCalcExprInt.h"
 #include "abCalcStack.h"
 
 
@@ -48,17 +50,14 @@ void subtrExecute(void)
     }
 
     if ((expr1Real) && (expr2Real)) {
-        result.type = abCalcExprTypeReal;
-        result.u.real = expr2->u.real - expr1->u.real;
+        abCalcExprRealSet(&result, expr2->u.real - expr1->u.real);
     } else {
-        result.type = abCalcExprTypeInt;
-
         if (expr1Real) {
-            result.u.integer = expr2->u.integer - (abCalcIntType)expr1->u.real;
+            abCalcExprIntSet(&result, expr2->u.integer - (abCalcIntType)expr1->u.real);
         } else if (expr2Real) {
-            result.u.integer = (abCalcIntType)expr2->u.real - expr1->u.integer;
+            abCalcExprIntSet(&result, (abCalcIntType)expr2->u.real - expr1->u.integer);
         } else {
-            result.u.integer = expr2->u.integer - expr2->u.integer;
+            abCalcExprIntSet(&result, expr2->u.integer - expr2->u.integer);
         }
     }
 

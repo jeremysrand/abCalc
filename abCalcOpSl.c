@@ -1,12 +1,12 @@
 /* 
-    abCalcOpNot.c
+    abCalcOpSl.c
         By: Jeremy Rand
  */
 
 
 #include <stdio.h>
 
-#include "abCalcOpNot.h"
+#include "abCalcOpSl.h"
 
 #include "abCalcOp.h"
 #include "abCalcError.h"
@@ -15,19 +15,19 @@
 #include "abCalcStack.h"
 
 
-#define OP_NAME "NOT"
+#define OP_NAME "SL"
 
 
-static void notExecute(void);
+static void slExecute(void);
 
 
-void abCalcOpNotInit(void)
+void abCalcOpSlInit(void)
 {
-    abCalcOpRegister(OP_NAME, notExecute);
+    abCalcOpRegister(OP_NAME, slExecute);
 }
 
 
-void notExecute(void)
+void slExecute(void)
 {
     abCalcExpr result;
     AB_CALC_OP_ONE_ARG(OP_NAME);
@@ -37,7 +37,7 @@ void notExecute(void)
         return;
     }
 
-    abCalcExprIntSet(&result, ~(expr->u.integer));
+    abCalcExprIntSet(&result, (expr->u.integer << 1));
 
     abCalcStackExprPop(NULL);
     abCalcStackExprPush(&result);

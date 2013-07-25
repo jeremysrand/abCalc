@@ -8,7 +8,10 @@
 #define ABCALCEXPREAL_H
 
 
+struct abCalcExpr;
+
 void abCalcExprRealInit(void);
 
+void abCalcExprRealSet(struct abCalcExpr *expr, abCalcRealType value);
 
 #endif

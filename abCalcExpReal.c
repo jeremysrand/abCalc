@@ -205,3 +205,13 @@ char *abCalcExprRealFormat(abCalcExpr *expr, char *buffer)
 	
     return buffer;
 }
+
+
+void abCalcExprRealSet(abCalcExpr *expr, abCalcRealType value)
+{
+    if (expr == NULL)
+        return;
+
+    expr->type = abCalcExprTypeReal;
+    expr->u.real = value;
+}

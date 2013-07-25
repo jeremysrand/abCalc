@@ -22,6 +22,11 @@
 #include "abCalcOpOr.h"
 #include "abCalcOpXor.h"
 #include "abCalcOpNot.h"
+#include "abCalcOpSl.h"
+#include "abCalcOpRl.h"
+#include "abCalcOpSr.h"
+#include "abCalcOpRr.h"
+#include "abCalcOpAsr.h"
 
 #include "abCalcOpBin.h"
 #include "abCalcOpOct.h"
@@ -52,6 +57,11 @@ void abCalcOpInit(void)
     abCalcOpOrInit();
     abCalcOpXorInit();
     abCalcOpNotInit();
+    abCalcOpSlInit();
+    abCalcOpRlInit();
+    abCalcOpSrInit();
+    abCalcOpRrInit();
+    abCalcOpAsrInit();
 
     abCalcOpBinInit();
     abCalcOpOctInit();

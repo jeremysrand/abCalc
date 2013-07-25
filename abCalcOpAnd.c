@@ -11,6 +11,7 @@
 #include "abCalcOp.h"
 #include "abCalcError.h"
 #include "abCalcExpr.h"
+#include "abCalcExprInt.h"
 #include "abCalcStack.h"
 
 
@@ -41,8 +42,7 @@ void andExecute(void)
         return;
     }
 
-    result.type = abCalcExprTypeInt;
-    result.u.integer = expr2->u.integer & expr1->u.integer;
+    abCalcExprIntSet(&result, expr2->u.integer & expr1->u.integer);
 
     abCalcStackExprPop(NULL);
     abCalcStackExprPop(NULL);

@@ -245,3 +245,21 @@ char *abCalcExprIntFormat(abCalcExpr *expr, char *buffer)
 
     return buffer;
 }
+
+
+void abCalcExprIntSet(abCalcExpr *expr, abCalcIntType value)
+{
+    int width;
+
+    if (expr == NULL)
+        return;
+
+    width = abCalcModeGetIntWidth();
+
+    expr->type = abCalcExprTypeInt;
+    expr->u.integer = value;
+
+    if (width < AB_CALC_EXPR_MAX_INT_WIDTH) {
+        expr->u.integer &= ((1l << width) - 1);
+    }
+}

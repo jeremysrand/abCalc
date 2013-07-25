@@ -12,6 +12,7 @@
 #include "abCalcOp.h"
 #include "abCalcError.h"
 #include "abCalcExpr.h"
+#include "abCalcExpReal.h"
 #include "abCalcStack.h"
 
 
@@ -43,17 +44,15 @@ void powerExecute(void)
         return;
     }
 
-    result.type = abCalcExprTypeReal;
-
 	if (expr2->u.real == 0.0) {
 		if (expr1->u.real < 0.0) {
             abCalcRaiseError(abCalcInfiniteResultError, OP_NAME);
 			return;
 		}
 		if (expr1->u.real == 0.0) {
-            result.u.real = 1.0;
+            abCalcExprRealSet(&result, 1.0);
 		} else {
-            result.u.real = 0.0;
+            abCalcExprRealSet(&result, 0.0);
 		}
 	} else {
         if (expr2->u.real < 0.0) {
@@ -63,7 +62,8 @@ void powerExecute(void)
                 return;
             }
         }
-        result.u.real = pow(expr2->u.real, expr1->u.real);
+
+        abCalcExprRealSet(&result, pow(expr2->u.real, expr1->u.real));
     }
 
     abCalcStackExprPop(NULL);
