@@ -16,12 +16,12 @@ OPS_OBJS=ops/abCOp.o ops/abCOpAdd.o ops/abCOpSubtr.o ops/abCOpMult.o \
 
 SHELL_OBJS=abCMain.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
 
-NDA_OBJS=abCNDA.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
-NDA_RES=abCNDA.r
+NDA_OBJS=abCalcNDA.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
+NDA_RES=abCalcNDA.r
 
 abCMain.o: abCalc.h abCStack.h expr/abCExpr.h ops/abCOp.h abCError.h
-abCNDA.o: abCNDA.defs
-abCNDA.r: abCNDA.defs
+abCalcNDA.o: abCalcNDA.defs abCalc.h
+abCalcNDA.r: abCalcNDA.defs
 
 abCalc.o: abCalc.h expr/abCExpr.h abCMode.h expr/abCExpReal.h expr/abCExprInt.h \
     abCStack.h ops/abCOp.h abCError.h

@@ -12,13 +12,19 @@ all: $(SHELL_NAME) $(NDA_NAME)
 
 CFLAGS=-D ABCALC_GSOS
 
-$(SHELL_NAME): fixtype $(SHELL_OBJS)
+$(SHELL_NAME): $(SHELL_OBJS)
 	occ -o $(SHELL_NAME) $(SHELL_OBJS)
 
-$(NDA_NAME): fixtype $(NDA_OBJS) $(NDA_NAME).r
-	cp $(NDA_NAME).r $(NDA_NAME)
+$(NDA_NAME): $(NDA_OBJS) $(NDA_NAME).r
+	cp -f $(NDA_NAME).r $(NDA_NAME)
 	occ -o $(NDA_NAME) $(NDA_OBJS)
 	chtyp -t nda $(NDA_NAME)
+
+abCalcMain.o: abCalcMain.c
+	occ $(CFLAGS) -c -o $@ $<
+
+$(NDA_NAME).o: $(NDA_NAME).c
+	occ $(CFLAGS) -c -o $@ $<
 
 clean:
 	cp -p rm -f $(SHELL_NAME) $(SHELL_OBJS) $(SHELL_NAME).root
@@ -27,13 +33,18 @@ clean:
 	cp -p rm -f expr/*.root
 	cp -p rm -f ops/*.root
 
-fixtype:
-	chtyp -l CC *.c *.h
+fixfiles:
+	tr '\\012' '\\015' < abCalcNDA.defs > /tmp/blah
+	cp -f /tmp/blah abCalcNDA.defs
+	tr '\\012' '\\015' < abCalcNDA.rez > /tmp/blah
+	cp -f /tmp/blah abCalcNDA.rez
+	chtyp -l CC *.c *.h *.defs
+	chtyp -l REZ *.rez
 	chtyp -l CC expr/*.c expr/*.h
 	chtyp -l CC ops/*.c ops/*.h
 
 %.o: %.c
-	occ $(CFLAGS) -c $<
+	occ $(CFLAGS) -c -o $@ $<
 
 %.r: %.rez
-	compile $< keep=$@
+	occ -o $@ $<

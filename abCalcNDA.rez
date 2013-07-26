@@ -1,19 +1,19 @@
-/* 
-    abCalcNDA.h
-        By: Jeremy Rand
- */
+/*                      */
+/*  abCalcNDA.h         */
+/*      By: Jeremy Rand */
+/*                      */
 
 
 #include "types.rez"
 #include "abCalcNda.defs"
 
 
-resource rWindParam1 (ABCALC_WINDOW_NUM) {
+resource rWindParam1 (abCalcWinNum) {
    $C0A5,                      /* wFrameBits */
    nil,                        /* wTitle */
    0,                          /* wRefCon */
    {0,0,0,0},                  /* ZoomRect */
-   ABCALC_LINED_COLORS,        /* wColor ID */
+   abCalcLinedColors,          /* wColor ID */
    {0,0},                      /* Origin */
    {0,0},                      /* data size */
    {0,0},                      /* max height-width */
@@ -21,17 +21,38 @@ resource rWindParam1 (ABCALC_WINDOW_NUM) {
    {0,0},                      /* page ver horiz */
    0,                          /* winfoRefcon */
    0,                          /* wInfoHeight */
-   {50,50,62,200},               /* wposition */
+   {10,10,180,630},            /* wposition */
    infront,                    /* wPlane */
-   nil,                        /* wStorage */
-   $0800                       /* wInVerb */
-   };
+   abCalcControlList,          /* wStorage */
+   $0809                       /* wInVerb */
+};
 
 
-resource rWindColor (ABCALC_LINED_COLORS) {
+resource rWindColor (abCalcLinedColors) {
    0x0000,                     /* frameColor */
    0x0F00,                     /* titleColor */
    0x020F,                     /* tbarColor */
    0xF0F0,                     /* growColor */
    0x00F0,                     /* infoColor */
-   };
+};
+
+
+resource rControlList (abCalcControlList) {
+    {
+        abCalcBtn0
+    }
+};
+
+
+resource rControlTemplate (abCalcBtn0) {
+    abCalcBtn0,
+    {8, 130, 0, 0},
+    SimpleButtonControl {{
+        $0002,
+        $3002,
+        0,
+        abCalcBtn0Str
+    }};
+};
+resource rPString (abCalcBtn0Str, noCrossBank) { "0" };
+    

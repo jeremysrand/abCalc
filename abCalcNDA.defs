@@ -1,7 +1,40 @@
-/* 
-    abCalcNDA.defs
-        By: Jeremy Rand
- */
+/*                      */
+/*  abCalcNDA.defs      */
+/*      By: Jeremy Rand */
+/*                      */
 
-#define ABCALC_WINDOW_NUM 1001
-#define ABCALC_LINED_COLORS 1002
+#define abCalcWinNum 1001
+#define abCalcLinedColors 1002
+
+#define abCalcControlList 1003
+
+
+#define abCalcBtn0    2001
+#define abCalcBtn0Str 2002
+
+#define abCalcBtn1    2003
+#define abCalcBtn1Str 2004
+
+#define abCalcBtn2    2005
+#define abCalcBtn2Str 2006
+
+#define abCalcBtn3    2007
+#define abCalcBtn3Str 2008
+
+#define abCalcBtn4    2009
+#define abCalcBtn4Str 2010
+
+#define abCalcBtn5    2011
+#define abCalcBtn5Str 2012
+
+#define abCalcBtn6    2013
+#define abCalcBtn6Str 2014
+
+#define abCalcBtn7    2015
+#define abCalcBtn7Str 2016
+
+#define abCalcBtn8    2017
+#define abCalcBtn8Str 2018
+
+#define abCalcBtn9    2019
+#define abCalcBtn9Str 2020
