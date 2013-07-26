@@ -45,6 +45,7 @@ void NDAInit(int code)
     if (code) {
         gCalcActive = FALSE;
         gUserId = MMStartUp();
+        abCalcInit();
     } else if (gCalcActive) {
         NDAClose();
     }
