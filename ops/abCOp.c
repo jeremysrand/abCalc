@@ -41,14 +41,9 @@
 #include "ops/abCOpAlog.h"
 #include "ops/abCOpLn.h"
 #include "ops/abCOpExp.h"
-#include "ops/abCOpLnp1.h"
-#include "ops/abCOpExpm.h"
 #include "ops/abCOpSinh.h"
-#include "ops/abCOpAsinh.h"
 #include "ops/abCOpCosh.h"
-#include "ops/abCOpAcosh.h"
 #include "ops/abCOpTanh.h"
-#include "ops/abCOpAtanh.h"
 
 #include "ops/abCOpAnd.h"
 #include "ops/abCOpOr.h"
@@ -105,14 +100,9 @@ void abCalcOpInit(void)
     abCalcOpAlogInit();
     abCalcOpLnInit();
     abCalcOpExpInit();
-    abCalcOpLnp1Init();
-    abCalcOpExpmInit();
     abCalcOpSinhInit();
-    abCalcOpAsinhInit();
     abCalcOpCoshInit();
-    abCalcOpAcoshInit();
     abCalcOpTanhInit();
-    abCalcOpAtanhInit();
 
     abCalcOpAndInit();
     abCalcOpOrInit();
