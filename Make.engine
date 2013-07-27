@@ -42,11 +42,11 @@ ops/abCOp.o: ops/abCOp.h abCError.h expr/abCExpr.h abCStack.h ops/abCOpAdd.h \
     ops/abCOpAnd.h ops/abCOpOr.h ops/abCOpXor.h ops/abCOpNot.h ops/abCOpBin.h \
     ops/abCOpOct.h ops/abCOpDec.h ops/abCOpHex.h ops/abCOpStws.h ops/abCOpRcws.h \
     ops/abCOpSl.h ops/abCOpRl.h ops/abCOpSr.h ops/abCOpRr.h ops/abCOpAsr.h \
-    ops/abCOpAsr.h ops/abCOpInv.h ops/abCOpChs.h ops/abCOpDrop.h ops/abCOpSwap.h \
-    ops/abCOpSin.h ops/abCOpCos.h ops/abCOpTan.h ops/abCOpAsin.h ops/abCOpAcos.h \
-    ops/abCOpAtan.h ops/abCOpSq.h ops/abCOpSqrt.h ops/abCOpPi.h ops/abCOpLog.h \
-    ops/abCOpAlog.h ops/abCOpLn.h ops/abCOpExp.h ops/abCOpSinh.h ops/abCOpCosh.h \
-    ops/abCOpTanh.h ops/abCOpClear.h
+    ops/abCOpInv.h ops/abCOpChs.h ops/abCOpDrop.h ops/abCOpSwap.h ops/abCOpSin.h \
+    ops/abCOpCos.h ops/abCOpTan.h ops/abCOpAsin.h ops/abCOpAcos.h ops/abCOpAtan.h \
+    ops/abCOpSq.h ops/abCOpSqrt.h ops/abCOpPi.h ops/abCOpLog.h ops/abCOpAlog.h \
+    ops/abCOpLn.h ops/abCOpExp.h ops/abCOpSinh.h ops/abCOpCosh.h ops/abCOpTanh.h \
+    ops/abCOpClear.h
 ops/abCOpAdd.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h abCStack.h ops/abCOpAdd.h
 ops/abCOpSubtr.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h abCStack.h ops/abCOpSubtr.h
 ops/abCOpMult.o: ops/abCOp.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h abCStack.h ops/abCOpMult.h
