@@ -39,6 +39,11 @@ void sqrtExecute(void)
         return;
     }
 
+    if (expr->u.real < 0.0) {
+        abCalcRaiseError(abCalcComplexResultError, SQRT_NAME);
+        return;
+    }
+
     abCalcExprRealSet(&result, sqrt(expr->u.real));
 
     abCalcStackExprPop(NULL);
