@@ -26,5 +26,7 @@ char *abCalcStackExprStringAt(int depth, char *buffer);
 
 int abCalcStackNumItems(void);
 
+void abCalcStackClear(void);
+
 
 #endif

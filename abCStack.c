@@ -91,3 +91,9 @@ char *abCalcStackExprStringAt(int depth, char *buffer)
 
     return buffer;
 }
+
+
+void abCalcStackClear(void)
+{
+    gStackNumItems = 0;
+}

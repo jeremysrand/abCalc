@@ -19,9 +19,36 @@
 #include "ops/abCOpSubtr.h"
 #include "ops/abCOpMult.h"
 #include "ops/abCOpDiv.h"
-#include "ops/abCOpPower.h"
-#include "ops/abCOpInv.h"
 #include "ops/abCOpChs.h"
+#include "ops/abCOpInv.h"
+#include "ops/abCOpSq.h"
+#include "ops/abCOpSqrt.h"
+#include "ops/abCOpPower.h"
+
+#include "ops/abCOpDrop.h"
+#include "ops/abCOpSwap.h"
+#include "ops/abCOpClear.h"
+
+#include "ops/abCOpPi.h"
+#include "ops/abCOpSin.h"
+#include "ops/abCOpCos.h"
+#include "ops/abCOpTan.h"
+#include "ops/abCOpAsin.h"
+#include "ops/abCOpAcos.h"
+#include "ops/abCOpAtan.h"
+
+#include "ops/abCOpLog.h"
+#include "ops/abCOpAlog.h"
+#include "ops/abCOpLn.h"
+#include "ops/abCOpExp.h"
+#include "ops/abCOpLnp1.h"
+#include "ops/abCOpExpm.h"
+#include "ops/abCOpSinh.h"
+#include "ops/abCOpAsinh.h"
+#include "ops/abCOpCosh.h"
+#include "ops/abCOpAcosh.h"
+#include "ops/abCOpTanh.h"
+#include "ops/abCOpAtanh.h"
 
 #include "ops/abCOpAnd.h"
 #include "ops/abCOpOr.h"
@@ -56,11 +83,36 @@ void abCalcOpInit(void)
     abCalcOpSubtrInit();
     abCalcOpMultInit();
     abCalcOpDivInit();
-    abCalcOpPowerInit();
-    abCalcOpInvInit();
     abCalcOpChsInit();
+    abCalcOpInvInit();
+    abCalcOpSqInit();
+    abCalcOpSqrtInit();
+    abCalcOpPowerInit();
 
     abCalcOpDropInit();
+    abCalcOpSwapInit();
+    abCalcOpClearInit();
+
+    abCalcOpPiInit();
+    abCalcOpSinInit();
+    abCalcOpCosInit();
+    abCalcOpTanInit();
+    abCalcOpAsinInit();
+    abCalcOpAcosInit();
+    abCalcOpAtanInit();
+
+    abCalcOpLogInit();
+    abCalcOpAlogInit();
+    abCalcOpLnInit();
+    abCalcOpExpInit();
+    abCalcOpLnp1Init();
+    abCalcOpExpmInit();
+    abCalcOpSinhInit();
+    abCalcOpAsinhInit();
+    abCalcOpCoshInit();
+    abCalcOpAcoshInit();
+    abCalcOpTanhInit();
+    abCalcOpAtanhInit();
 
     abCalcOpAndInit();
     abCalcOpOrInit();
