@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "abCError.h"
 #include "abCStack.h"
@@ -19,6 +20,8 @@
 #include "ops/abCOpMult.h"
 #include "ops/abCOpDiv.h"
 #include "ops/abCOpPower.h"
+#include "ops/abCOpInv.h"
+#include "ops/abCOpChs.h"
 
 #include "ops/abCOpAnd.h"
 #include "ops/abCOpOr.h"
@@ -41,7 +44,7 @@
 #define AB_CALC_MAX_OPS 128
 
 
-static abCalcOp gOps[AB_CALC_MAX_OPS];
+abCalcOp gOps[AB_CALC_MAX_OPS];
 static int gNumOps = 0;
 
 
@@ -54,6 +57,10 @@ void abCalcOpInit(void)
     abCalcOpMultInit();
     abCalcOpDivInit();
     abCalcOpPowerInit();
+    abCalcOpInvInit();
+    abCalcOpChsInit();
+
+    abCalcOpDropInit();
 
     abCalcOpAndInit();
     abCalcOpOrInit();
@@ -105,3 +112,17 @@ abCalcOp *abCalcOpLookup(char *name)
 }
 
 
+abCalcOp *abCalcOpNth(int n)
+{
+    if ((n < 0) ||
+        (n >= gNumOps))
+        return NULL;
+
+    return &gOps[n];
+}
+
+
+int abCalcOpNumOps(void)
+{
+    return gNumOps;
+}

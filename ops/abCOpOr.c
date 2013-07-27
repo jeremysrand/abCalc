@@ -16,7 +16,7 @@
 #include "ops/abCOpOr.h"
 
 
-#define OP_NAME "OR"
+#define OR_NAME "OR"
 
 
 static void orExecute(void);
@@ -24,22 +24,22 @@ static void orExecute(void);
 
 void abCalcOpOrInit(void)
 {
-    abCalcOpRegister(OP_NAME, orExecute);
+    abCalcOpRegister(OR_NAME, orExecute);
 }
 
 
 void orExecute(void)
 {
     abCalcExpr result;
-    AB_CALC_OP_TWO_ARGS(OP_NAME);
+    AB_CALC_OP_TWO_ARGS(OR_NAME);
 
     if (expr1->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, OR_NAME);
         return;
     }
 
     if (expr2->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, OR_NAME);
         return;
     }
 

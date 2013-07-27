@@ -16,7 +16,7 @@
 #include "ops/abCOpRcws.h"
 
 
-#define OP_NAME "RCWS"
+#define RCWS_NAME "RCWS"
 
 
 static void rcwsExecute(void);
@@ -24,7 +24,7 @@ static void rcwsExecute(void);
 
 void abCalcOpRcwsInit(void)
 {
-    abCalcOpRegister(OP_NAME, rcwsExecute);
+    abCalcOpRegister(RCWS_NAME, rcwsExecute);
 }
 
 

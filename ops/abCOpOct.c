@@ -12,7 +12,7 @@
 #include "ops/abCOpOct.h"
 
 
-#define OP_NAME "OCT"
+#define OCT_NAME "OCT"
 
 
 static void octExecute(void);
@@ -20,7 +20,7 @@ static void octExecute(void);
 
 void abCalcOpOctInit(void)
 {
-    abCalcOpRegister(OP_NAME, octExecute);
+    abCalcOpRegister(OCT_NAME, octExecute);
 }
 
 

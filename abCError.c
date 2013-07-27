@@ -15,7 +15,7 @@ static char *gErrorStrings[abCalcErrorTypeMax];
 static abCalcErrorType gCurrErrorType = abCalcNoError;
 static char *gCurrErrorOpName = NULL;
 
-static char gErrorBuffer[128];
+char gErrorBuffer[128];
 
 
 void abCalcErrorInit(void)

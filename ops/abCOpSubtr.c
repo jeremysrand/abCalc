@@ -17,7 +17,7 @@
 #include "ops/abCOpSubtr.h"
 
 
-#define OP_NAME "-"
+#define SUB_NAME "-"
 
 
 static void subtrExecute(void);
@@ -25,7 +25,7 @@ static void subtrExecute(void);
 
 void abCalcOpSubtrInit(void)
 {
-    abCalcOpRegister(OP_NAME, subtrExecute);
+    abCalcOpRegister(SUB_NAME, subtrExecute);
 }
 
 
@@ -34,19 +34,19 @@ void subtrExecute(void)
     abCalcExpr result;
     char expr1Real = 0;
     char expr2Real = 0;
-    AB_CALC_OP_TWO_ARGS(OP_NAME);
+    AB_CALC_OP_TWO_ARGS(SUB_NAME);
 
     if (expr1->type == abCalcExprTypeReal) {
         expr1Real = 1;
     } else if (expr1->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, SUB_NAME);
         return;
     }
 
     if (expr2->type == abCalcExprTypeReal) {
         expr2Real = 1;
     } else if (expr2->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, SUB_NAME);
         return;
     }
 

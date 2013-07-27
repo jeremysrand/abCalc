@@ -16,7 +16,7 @@
 #include "ops/abCOpAnd.h"
 
 
-#define OP_NAME "AND"
+#define AND_NAME "AND"
 
 
 static void andExecute(void);
@@ -24,22 +24,22 @@ static void andExecute(void);
 
 void abCalcOpAndInit(void)
 {
-    abCalcOpRegister(OP_NAME, andExecute);
+    abCalcOpRegister(AND_NAME, andExecute);
 }
 
 
 void andExecute(void)
 {
     abCalcExpr result;
-    AB_CALC_OP_TWO_ARGS(OP_NAME);
+    AB_CALC_OP_TWO_ARGS(AND_NAME);
 
     if (expr1->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, AND_NAME);
         return;
     }
 
     if (expr2->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, AND_NAME);
         return;
     }
 

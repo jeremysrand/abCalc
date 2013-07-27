@@ -17,7 +17,7 @@
 #include "ops/abCOpAsr.h"
 
 
-#define OP_NAME "ASR"
+#define ASR_NAME "ASR"
 
 
 static void asrExecute(void);
@@ -25,7 +25,7 @@ static void asrExecute(void);
 
 void abCalcOpAsrInit(void)
 {
-    abCalcOpRegister(OP_NAME, asrExecute);
+    abCalcOpRegister(ASR_NAME, asrExecute);
 }
 
 
@@ -34,10 +34,10 @@ void asrExecute(void)
     abCalcExpr result;
     int width;
     abCalcIntType upperBit;
-    AB_CALC_OP_ONE_ARG(OP_NAME);
+    AB_CALC_OP_ONE_ARG(ASR_NAME);
 
     if (expr->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, ASR_NAME);
         return;
     }
 

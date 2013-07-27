@@ -17,7 +17,7 @@
 #include "ops/abCOpRr.h"
 
 
-#define OP_NAME "RR"
+#define RR_NAME "RR"
 
 
 static void rrExecute(void);
@@ -25,7 +25,7 @@ static void rrExecute(void);
 
 void abCalcOpRrInit(void)
 {
-    abCalcOpRegister(OP_NAME, rrExecute);
+    abCalcOpRegister(RR_NAME, rrExecute);
 }
 
 
@@ -34,10 +34,10 @@ void rrExecute(void)
     abCalcExpr result;
     int width;
     abCalcIntType bottomBit;
-    AB_CALC_OP_ONE_ARG(OP_NAME);
+    AB_CALC_OP_ONE_ARG(RR_NAME);
 
     if (expr->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, RR_NAME);
         return;
     }
 

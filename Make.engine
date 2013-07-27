@@ -12,7 +12,7 @@ OPS_OBJS=ops/abCOp.o ops/abCOpAdd.o ops/abCOpSubtr.o ops/abCOpMult.o \
     ops/abCOpDiv.o ops/abCOpPower.o ops/abCOpAnd.o ops/abCOpOr.o ops/abCOpXor.o \
     ops/abCOpNot.o ops/abCOpBin.o ops/abCOpOct.o ops/abCOpDec.o ops/abCOpHex.o \
     ops/abCOpStws.o ops/abCOpRcws.o ops/abCOpSl.o ops/abCOpRl.o ops/abCOpSr.o \
-    ops/abCOpRr.o ops/abCOpAsr.o
+    ops/abCOpRr.o ops/abCOpAsr.o ops/abCOpInv.o ops/abCOpChs.o ops/abCOpDrop.o
 
 SHELL_OBJS=abCMain.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
 
@@ -20,7 +20,7 @@ NDA_OBJS=abCalcNDA.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
 NDA_RES=abCalcNDA.r
 
 abCMain.o: abCalc.h abCStack.h expr/abCExpr.h ops/abCOp.h abCError.h
-abCalcNDA.o: abCalcNDA.defs abCalc.h
+abCalcNDA.o: abCalcNDA.defs abCalc.h abCStack.h abCError.h expr/abCExpr.h ops/abCOp.h
 abCalcNDA.r: abCalcNDA.defs
 
 abCalc.o: abCalc.h expr/abCExpr.h abCMode.h expr/abCExpReal.h expr/abCExprInt.h \
@@ -58,4 +58,7 @@ ops/abCOpRl.o: ops/abCOp.h abCMode.h abCError.h abCStack.h expr/abCExpr.h expr/a
 ops/abCOpSr.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExprInt.h ops/abCOpSr.h
 ops/abCOpRr.o: ops/abCOp.h abCMode.h abCError.h abCStack.h expr/abCExpr.h expr/abCExprInt.h ops/abCOpRr.h
 ops/abCOpAsr.o: ops/abCOp.h abCMode.h abCError.h abCStack.h expr/abCExpr.h expr/abCExprInt.h ops/abCOpAsr.h
+ops/abCOpInv.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExpReal.h ops/abCOpInv.h
+ops/abCOpChs.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExpReal.h ops/abCOpChs.h
+ops/abCOpDrop.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h ops/abCOpDrop.h
 

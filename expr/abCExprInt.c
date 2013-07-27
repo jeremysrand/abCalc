@@ -17,7 +17,7 @@ static abCalcExpr *abCalcExprIntParse(abCalcExpr *expr, char *buffer);
 static char *abCalcExprIntFormat(abCalcExpr *expr, char *buffer);
 
 
-static abCalcExprCallbacks gCallbacks = {
+static abCalcExprCallbacks gIntCallbacks = {
     abCalcExprIntParse,
     abCalcExprIntFormat
 };
@@ -25,7 +25,7 @@ static abCalcExprCallbacks gCallbacks = {
 
 void abCalcExprIntInit(void)
 {
-    abCalcRegisterExprType(abCalcExprTypeInt, &gCallbacks);
+    abCalcRegisterExprType(abCalcExprTypeInt, &gIntCallbacks);
 }
 
 

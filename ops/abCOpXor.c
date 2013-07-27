@@ -16,7 +16,7 @@
 #include "ops/abCOpXor.h"
 
 
-#define OP_NAME "XOR"
+#define XOR_NAME "XOR"
 
 
 static void xorExecute(void);
@@ -24,22 +24,22 @@ static void xorExecute(void);
 
 void abCalcOpXorInit(void)
 {
-    abCalcOpRegister(OP_NAME, xorExecute);
+    abCalcOpRegister(XOR_NAME, xorExecute);
 }
 
 
 void xorExecute(void)
 {
     abCalcExpr result;
-    AB_CALC_OP_TWO_ARGS(OP_NAME);
+    AB_CALC_OP_TWO_ARGS(XOR_NAME);
 
     if (expr1->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, XOR_NAME);
         return;
     }
 
     if (expr2->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, XOR_NAME);
         return;
     }
 

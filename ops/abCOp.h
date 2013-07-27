@@ -37,5 +37,8 @@ void abCalcOpRegister(char *name, void (*execute)(void));
 
 abCalcOp *abCalcOpLookup(char *name);
 
+abCalcOp *abCalcOpNth(int n);
+
+int abCalcOpNumOps(void);
 
 #endif

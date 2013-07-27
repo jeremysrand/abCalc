@@ -12,7 +12,7 @@
 #include "ops/abCOpHex.h"
 
 
-#define OP_NAME "HEX"
+#define HEX_NAME "HEX"
 
 
 static void hexExecute(void);
@@ -20,7 +20,7 @@ static void hexExecute(void);
 
 void abCalcOpHexInit(void)
 {
-    abCalcOpRegister(OP_NAME, hexExecute);
+    abCalcOpRegister(HEX_NAME, hexExecute);
 }
 
 

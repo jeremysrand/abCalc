@@ -16,7 +16,7 @@ static abCalcExpr *abCalcExprRealParse(abCalcExpr *expr, char *buffer);
 static char *abCalcExprRealFormat(abCalcExpr *expr, char *buffer);
 
 
-static abCalcExprCallbacks gCallbacks = {
+static abCalcExprCallbacks gRealCallbacks = {
     abCalcExprRealParse,
     abCalcExprRealFormat
 };
@@ -24,7 +24,7 @@ static abCalcExprCallbacks gCallbacks = {
 
 void abCalcExprRealInit(void)
 {
-    abCalcRegisterExprType(abCalcExprTypeReal, &gCallbacks);
+    abCalcRegisterExprType(abCalcExprTypeReal, &gRealCallbacks);
 }
 
 
@@ -104,7 +104,7 @@ char *abCalcExprRealFormat(abCalcExpr *expr, char *buffer)
 {
 	abCalcRealType exp;
 	abCalcRealType value;
-    char format[16];
+    static char format[16];
     int numDecDigits;
 	int periodPos = -1;
 	int zerosStart = -1;

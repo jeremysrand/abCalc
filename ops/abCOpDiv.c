@@ -17,7 +17,7 @@
 #include "ops/abCOpDiv.h"
 
 
-#define OP_NAME "/"
+#define DIV_NAME "/"
 
 
 static void divExecute(void);
@@ -25,7 +25,7 @@ static void divExecute(void);
 
 void abCalcOpDivInit(void)
 {
-    abCalcOpRegister(OP_NAME, divExecute);
+    abCalcOpRegister(DIV_NAME, divExecute);
 }
 
 
@@ -34,28 +34,28 @@ void divExecute(void)
     abCalcExpr result;
     char expr1Real = 0;
     char expr2Real = 0;
-    AB_CALC_OP_TWO_ARGS(OP_NAME);
+    AB_CALC_OP_TWO_ARGS(DIV_NAME);
 
     if (expr1->type == abCalcExprTypeReal) {
         expr1Real = 1;
         if (expr1->u.real == 0.0) {
-            abCalcRaiseError(abCalcInfiniteResultError, OP_NAME);
+            abCalcRaiseError(abCalcInfiniteResultError, DIV_NAME);
             return;
         }
     } else if (expr1->type == abCalcExprTypeInt) {
         if (expr1->u.integer == 0l) {
-            abCalcRaiseError(abCalcInfiniteResultError, OP_NAME);
+            abCalcRaiseError(abCalcInfiniteResultError, DIV_NAME);
             return;
         }
     } else {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, DIV_NAME);
         return;
     }
 
     if (expr2->type == abCalcExprTypeReal) {
         expr2Real = 1;
     } else if (expr2->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, DIV_NAME);
         return;
     }
 

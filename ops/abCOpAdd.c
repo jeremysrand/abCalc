@@ -18,7 +18,7 @@
 #include "ops/abCOpAdd.h"
 
 
-#define OP_NAME "+"
+#define ADD_NAME "+"
 
 
 static void addExecute(void);
@@ -26,7 +26,7 @@ static void addExecute(void);
 
 void abCalcOpAddInit(void)
 {
-    abCalcOpRegister(OP_NAME, addExecute);
+    abCalcOpRegister(ADD_NAME, addExecute);
 }
 
 
@@ -35,19 +35,19 @@ void addExecute(void)
     abCalcExpr result;
     char expr1Real = 0;
     char expr2Real = 0;
-    AB_CALC_OP_TWO_ARGS(OP_NAME);
+    AB_CALC_OP_TWO_ARGS(ADD_NAME);
 
     if (expr1->type == abCalcExprTypeReal) {
         expr1Real = 1;
     } else if (expr1->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, ADD_NAME);
         return;
     }
 
     if (expr2->type == abCalcExprTypeReal) {
         expr2Real = 1;
     } else if (expr2->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, ADD_NAME);
         return;
     }
 

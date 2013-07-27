@@ -4,6 +4,7 @@
  */
 
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -11,10 +12,7 @@
 #include "abCError.h"
 
 
-#define AB_CALC_STACK_DEPTH 128
-
-
-static abCalcExpr gStack[AB_CALC_STACK_DEPTH];
+abCalcExpr gStack[AB_CALC_STACK_DEPTH];
 static int gStackNumItems = 0;
 
 
@@ -74,4 +72,22 @@ abCalcExpr *abCalcStackExprAt(int depth)
     }
 
     return result;
+}
+
+
+char *abCalcStackExprStringAt(int depth, char *buffer)
+{
+    static char tmpBuffer[AB_CALC_EXPR_STRING_MAX];
+
+    if (buffer == NULL)
+        return NULL;
+
+    sprintf(buffer, "%3d: ", depth + 1);
+    if (depth < gStackNumItems) {
+        if (abCalcFormatExpr(&(gStack[gStackNumItems - 1 - depth]), tmpBuffer) != NULL) {
+            strcat(buffer, tmpBuffer);
+        }
+    }
+
+    return buffer;
 }

@@ -218,10 +218,12 @@ resource rControlTemplate (abCalcBtnEnter) {
     abCalcBtnEnter,
     {abCalcBtnRow4, abCalcBtnCol0, abCalcBtnRow4+abCalcBtnHeight, abCalcBtnCol2+abCalcBtnWidth},
     SimpleButtonControl {{
-        $0002,
+        $0003,
         $3002,
         0,
-        abCalcBtnEnterStr
+        abCalcBtnEnterStr,
+        0,
+        {"\n","",0,0}
     }};
 };
 resource rPString (abCalcBtnEnterStr, noCrossBank) { "Enter" };
@@ -360,14 +362,14 @@ resource rPString (abCalcBtnFStr, noCrossBank) { "F" };
 
 resource rControlTemplate (abCalcStackList) {
    abCalcStackList,                     /* control ID */
-   {abCalcBtnSpaceY, abCalcBtnSpaceX, abCalcBtnRow7-abCalcBtnSpaceX, abCalcBtnCol3+abCalcBtnWidth-23}, /* control rect */
+   {1, abCalcBtnSpaceX, 41, abCalcWinWidth-abCalcBtnSpaceX}, /* control rect */
    ListControl {{
       $0000,                            /* flags */
       $1400,                            /* more flags */
       0,                                /* refcon */
       0,                                /* list size */
       4,                                /* List View */
-      $0000,                            /* List Type */
+      $0007,                            /* List Type */
       0,                                /* List Start */
       10,                               /* ListMemHeight */
       5,                                /* List Mem Size */
@@ -378,14 +380,14 @@ resource rControlTemplate (abCalcStackList) {
 
 resource rControlTemplate (abCalcOpList) {
    abCalcOpList,                     /* control ID */
-   {abCalcBtnSpaceY, abCalcOpCol, abCalcWinHeight-abCalcBtnSpaceY, abCalcWinWidth-abCalcBtnSpaceX-23}, /* control rect */
+   {abCalcBtnRow7, abCalcOpCol, abCalcWinHeight-8, abCalcWinWidth-abCalcBtnSpaceX}, /* control rect */
    ListControl {{
       $0000,                            /* flags */
       $1400,                            /* more flags */
       0,                                /* refcon */
       0,                                /* list size */
       4,                                /* List View */
-      $0000,                            /* List Type */
+      $0007,                            /* List Type */
       0,                                /* List Start */
       10,                               /* ListMemHeight */
       5,                                /* List Mem Size */
@@ -401,7 +403,7 @@ resource rControlTemplate (abCalcEntryBox) {
       $0000,                            /* flags */
       $7000,                            /* more flags */
       0,                                /* refcon */
-      20,                               /* Max size */
+      34,                               /* Max size */
       0                                 /* text Ref */
       }};
    };

@@ -12,7 +12,7 @@
 #include "ops/abCOpBin.h"
 
 
-#define OP_NAME "BIN"
+#define BIN_NAME "BIN"
 
 
 static void binExecute(void);
@@ -20,7 +20,7 @@ static void binExecute(void);
 
 void abCalcOpBinInit(void)
 {
-    abCalcOpRegister(OP_NAME, binExecute);
+    abCalcOpRegister(BIN_NAME, binExecute);
 }
 
 

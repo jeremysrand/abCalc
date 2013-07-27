@@ -17,7 +17,7 @@
 #include "ops/abCOpPower.h"
 
 
-#define OP_NAME "^"
+#define POWER_NAME "^"
 
 
 static void powerExecute(void);
@@ -25,7 +25,7 @@ static void powerExecute(void);
 
 void abCalcOpPowerInit(void)
 {
-    abCalcOpRegister(OP_NAME, powerExecute);
+    abCalcOpRegister(POWER_NAME, powerExecute);
 }
 
 
@@ -33,21 +33,21 @@ void powerExecute(void)
 {
     abCalcExpr result;
     double integral;
-    AB_CALC_OP_TWO_ARGS(OP_NAME);
+    AB_CALC_OP_TWO_ARGS(POWER_NAME);
 
     if (expr1->type != abCalcExprTypeReal) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, POWER_NAME);
         return;
     }
 
     if (expr2->type != abCalcExprTypeReal) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, POWER_NAME);
         return;
     }
 
 	if (expr2->u.real == 0.0) {
 		if (expr1->u.real < 0.0) {
-            abCalcRaiseError(abCalcInfiniteResultError, OP_NAME);
+            abCalcRaiseError(abCalcInfiniteResultError, POWER_NAME);
 			return;
 		}
 		if (expr1->u.real == 0.0) {
@@ -59,7 +59,7 @@ void powerExecute(void)
         if (expr2->u.real < 0.0) {
             modf(expr1->u.real, &integral);
             if (expr1->u.real != integral) {
-                abCalcRaiseError(abCalcComplexResultError, OP_NAME);
+                abCalcRaiseError(abCalcComplexResultError, POWER_NAME);
                 return;
             }
         }

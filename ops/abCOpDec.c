@@ -12,7 +12,7 @@
 #include "ops/abCOpDec.h"
 
 
-#define OP_NAME "DEC"
+#define DEC_NAME "DEC"
 
 
 static void decExecute(void);
@@ -20,7 +20,7 @@ static void decExecute(void);
 
 void abCalcOpDecInit(void)
 {
-    abCalcOpRegister(OP_NAME, decExecute);
+    abCalcOpRegister(DEC_NAME, decExecute);
 }
 
 

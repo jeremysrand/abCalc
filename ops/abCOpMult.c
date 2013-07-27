@@ -17,7 +17,7 @@
 #include "ops/abCOpMult.h"
 
 
-#define OP_NAME "*"
+#define MUL_NAME "*"
 
 
 static void multExecute(void);
@@ -25,7 +25,7 @@ static void multExecute(void);
 
 void abCalcOpMultInit(void)
 {
-    abCalcOpRegister(OP_NAME, multExecute);
+    abCalcOpRegister(MUL_NAME, multExecute);
 }
 
 
@@ -34,19 +34,19 @@ void multExecute(void)
     abCalcExpr result;
     char expr1Real = 0;
     char expr2Real = 0;
-    AB_CALC_OP_TWO_ARGS(OP_NAME);
+    AB_CALC_OP_TWO_ARGS(MUL_NAME);
 
     if (expr1->type == abCalcExprTypeReal) {
         expr1Real = 1;
     } else if (expr1->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, MUL_NAME);
         return;
     }
 
     if (expr2->type == abCalcExprTypeReal) {
         expr2Real = 1;
     } else if (expr2->type != abCalcExprTypeInt) {
-        abCalcRaiseError(abCalcBadArgTypeError, OP_NAME);
+        abCalcRaiseError(abCalcBadArgTypeError, MUL_NAME);
         return;
     }
 
