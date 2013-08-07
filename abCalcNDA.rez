@@ -77,7 +77,9 @@ resource rControlTemplate (abCalcBtn0) {
         $0002,
         $3002,
         0,
-        abCalcBtn0Str
+        abCalcBtn0Str,
+        0,
+        {"0","",0,0}
     }};
 };
 resource rPString (abCalcBtn0Str, noCrossBank) { "0" };
@@ -89,7 +91,9 @@ resource rControlTemplate (abCalcBtnDot) {
         $0002,
         $3002,
         0,
-        abCalcBtnDotStr
+        abCalcBtnDotStr,
+        0,
+        {".","",0,0}
     }};
 };
 resource rPString (abCalcBtnDotStr, noCrossBank) { "." };
@@ -101,7 +105,9 @@ resource rControlTemplate (abCalcBtnNum) {
         $0002,
         $3002,
         0,
-        abCalcBtnNumStr
+        abCalcBtnNumStr,
+        0,
+        {"#","",0,0}
     }};
 };
 resource rPString (abCalcBtnNumStr, noCrossBank) { "#" };
@@ -113,7 +119,9 @@ resource rControlTemplate (abCalcBtn1) {
         $0002,
         $3002,
         0,
-        abCalcBtn1Str
+        abCalcBtn1Str,
+        0,
+        {"1","",0,0}
     }};
 };
 resource rPString (abCalcBtn1Str, noCrossBank) { "1" };
@@ -125,7 +133,9 @@ resource rControlTemplate (abCalcBtn2) {
         $0002,
         $3002,
         0,
-        abCalcBtn2Str
+        abCalcBtn2Str,
+        0,
+        {"2","",0,0}
     }};
 };
 resource rPString (abCalcBtn2Str, noCrossBank) { "2" };
@@ -137,7 +147,9 @@ resource rControlTemplate (abCalcBtn3) {
         $0002,
         $3002,
         0,
-        abCalcBtn3Str
+        abCalcBtn3Str,
+        0,
+        {"3","",0,0}
     }};
 };
 resource rPString (abCalcBtn3Str, noCrossBank) { "3" };
@@ -149,7 +161,9 @@ resource rControlTemplate (abCalcBtn4) {
         $0002,
         $3002,
         0,
-        abCalcBtn4Str
+        abCalcBtn4Str,
+        0,
+        {"4","",0,0}
     }};
 };
 resource rPString (abCalcBtn4Str, noCrossBank) { "4" };
@@ -161,7 +175,9 @@ resource rControlTemplate (abCalcBtn5) {
         $0002,
         $3002,
         0,
-        abCalcBtn5Str
+        abCalcBtn5Str,
+        0,
+        {"5","",0,0}
     }};
 };
 resource rPString (abCalcBtn5Str, noCrossBank) { "5" };
@@ -173,7 +189,9 @@ resource rControlTemplate (abCalcBtn6) {
         $0002,
         $3002,
         0,
-        abCalcBtn6Str
+        abCalcBtn6Str,
+        0,
+        {"6","",0,0}
     }};
 };
 resource rPString (abCalcBtn6Str, noCrossBank) { "6" };
@@ -185,7 +203,9 @@ resource rControlTemplate (abCalcBtn7) {
         $0002,
         $3002,
         0,
-        abCalcBtn7Str
+        abCalcBtn7Str,
+        0,
+        {"7","",0,0}
     }};
 };
 resource rPString (abCalcBtn7Str, noCrossBank) { "7" };
@@ -197,7 +217,9 @@ resource rControlTemplate (abCalcBtn8) {
         $0002,
         $3002,
         0,
-        abCalcBtn8Str
+        abCalcBtn8Str,
+        0,
+        {"8","",0,0}
     }};
 };
 resource rPString (abCalcBtn8Str, noCrossBank) { "8" };
@@ -209,7 +231,9 @@ resource rControlTemplate (abCalcBtn9) {
         $0002,
         $3002,
         0,
-        abCalcBtn9Str
+        abCalcBtn9Str,
+        0,
+        {"9","",0,0}
     }};
 };
 resource rPString (abCalcBtn9Str, noCrossBank) { "9" };
@@ -235,7 +259,9 @@ resource rControlTemplate (abCalcBtnPow) {
         $0002,
         $3002,
         0,
-        abCalcBtnPowStr
+        abCalcBtnPowStr,
+        0,
+        {"^","",0,0}
     }};
 };
 resource rPString (abCalcBtnPowStr, noCrossBank) { "^" };
@@ -247,7 +273,9 @@ resource rControlTemplate (abCalcBtnAdd) {
         $0002,
         $3002,
         0,
-        abCalcBtnAddStr
+        abCalcBtnAddStr,
+        0,
+        {"+","",0,0}
     }};
 };
 resource rPString (abCalcBtnAddStr, noCrossBank) { "+" };
@@ -259,7 +287,9 @@ resource rControlTemplate (abCalcBtnSub) {
         $0002,
         $3002,
         0,
-        abCalcBtnSubStr
+        abCalcBtnSubStr,
+        0,
+        {"-","",0,0}
     }};
 };
 resource rPString (abCalcBtnSubStr, noCrossBank) { "-" };
@@ -271,7 +301,9 @@ resource rControlTemplate (abCalcBtnMult) {
         $0002,
         $3002,
         0,
-        abCalcBtnMultStr
+        abCalcBtnMultStr,
+        0,
+        {"*","",0,0}
     }};
 };
 resource rPString (abCalcBtnMultStr, noCrossBank) { "x" };
@@ -283,7 +315,9 @@ resource rControlTemplate (abCalcBtnDiv) {
         $0002,
         $3002,
         0,
-        abCalcBtnDivStr
+        abCalcBtnDivStr,
+        0,
+        {"/","",0,0}
     }};
 };
 resource rPString (abCalcBtnDivStr, noCrossBank) { "/" };
@@ -295,7 +329,9 @@ resource rControlTemplate (abCalcBtnA) {
         $0002,
         $3002,
         0,
-        abCalcBtnAStr
+        abCalcBtnAStr,
+        0,
+        {"A","",0,0}
     }};
 };
 resource rPString (abCalcBtnAStr, noCrossBank) { "A" };
@@ -307,7 +343,9 @@ resource rControlTemplate (abCalcBtnB) {
         $0002,
         $3002,
         0,
-        abCalcBtnBStr
+        abCalcBtnBStr,
+        0,
+        {"B","",0,0}
     }};
 };
 resource rPString (abCalcBtnBStr, noCrossBank) { "B" };
@@ -319,19 +357,23 @@ resource rControlTemplate (abCalcBtnC) {
         $0002,
         $3002,
         0,
-        abCalcBtnCStr
+        abCalcBtnCStr,
+        0,
+        {"C","",0,0}
     }};
 };
 resource rPString (abCalcBtnCStr, noCrossBank) { "C" };
     
 resource rControlTemplate (abCalcBtnD) {
-    abCalcBtnC,
+    abCalcBtnD,
     {abCalcBtnRow6, abCalcBtnCol0, 0, 0},
     SimpleButtonControl {{
         $0002,
         $3002,
         0,
-        abCalcBtnDStr
+        abCalcBtnDStr,
+        0,
+        {"D","",0,0}
     }};
 };
 resource rPString (abCalcBtnDStr, noCrossBank) { "D" };
@@ -343,7 +385,9 @@ resource rControlTemplate (abCalcBtnE) {
         $0002,
         $3002,
         0,
-        abCalcBtnEStr
+        abCalcBtnEStr,
+        0,
+        {"E","",0,0}
     }};
 };
 resource rPString (abCalcBtnEStr, noCrossBank) { "E" };
@@ -355,7 +399,9 @@ resource rControlTemplate (abCalcBtnF) {
         $0002,
         $3002,
         0,
-        abCalcBtnFStr
+        abCalcBtnFStr,
+        0,
+        {"F","",0,0}
     }};
 };
 resource rPString (abCalcBtnFStr, noCrossBank) { "F" };
@@ -380,13 +426,13 @@ resource rControlTemplate (abCalcStackList) {
 
 resource rControlTemplate (abCalcOpList) {
    abCalcOpList,                     /* control ID */
-   {abCalcBtnRow7, abCalcOpCol, abCalcWinHeight-8, abCalcWinWidth-abCalcBtnSpaceX}, /* control rect */
+   {abCalcBtnRow7, abCalcOpCol, abCalcWinHeight-(3*abCalcBtnSpaceY), abCalcWinWidth-abCalcBtnSpaceX}, /* control rect */
    ListControl {{
       $0000,                            /* flags */
       $1400,                            /* more flags */
       0,                                /* refcon */
       0,                                /* list size */
-      4,                                /* List View */
+      12,                               /* List View */
       $0007,                            /* List Type */
       0,                                /* List Start */
       10,                               /* ListMemHeight */

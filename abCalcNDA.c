@@ -5,11 +5,12 @@
 
 
 #pragma nda NDAOpen NDAClose NDAAction NDAInit 0 0xFFFF "  abCalc\\H**"
-#pragma stacksize 4096
+#pragma stacksize 2048
 
 
 #include <orca.h>
 #include <GSOS.h>
+#include <Locator.h>
 #include <QuickDraw.h>
 #include <Window.h>
 #include <Desk.h>
@@ -19,6 +20,8 @@
 #include <Control.h>
 #include <Event.h>
 #include <List.h>
+#include <Sane.h>
+#include <LineEdit.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -33,7 +36,7 @@
 #include "ops/abCOp.h"
 
 
-void UpdateStack(Boolean draw);
+void UpdateStack(void);
 
 
 typedef struct listElement {
@@ -41,6 +44,15 @@ typedef struct listElement {
     Byte memFlag;
 } listElement;
 
+
+static ToolTable gToolTable = {
+    2,
+    { { 0x1c, 0 },      /* List Manager */
+      { 0x0a, 0 } }     /* SANE */
+};
+
+static BOOLEAN gListStarted = FALSE;
+static BOOLEAN gSANEStarted = FALSE;
 
 static BOOLEAN gCalcActive = FALSE;
 static GrafPortPtr gCalcWinPtr = NULL;
@@ -51,30 +63,29 @@ listElement gStackList[AB_CALC_STACK_DEPTH];
 abCalcExpr gNDAExpr;
 
 
+
 void NDAClose(void)
 {
     int i;
-    int numOps;
 
     if (gCalcActive) {
         CloseWindow(gCalcWinPtr);
         gCalcWinPtr = NULL;
         gCalcActive = FALSE;
+    }
 
-        numOps = abCalcOpNumOps();
-        for (i = 0; i < numOps; i++) {
-            free(gOpList[i].memPtr);
-        }
+    if (gOpList != NULL) {
         free(gOpList);
         gOpList = NULL;
+    }
 
-        for (i = 0; i < AB_CALC_STACK_DEPTH; i++) {
-            if (gStackList[i].memPtr != NULL) {
-                free(gStackList[i].memPtr);
-                gStackList[i].memPtr = NULL;
-            }
+    for (i = 0; i < AB_CALC_STACK_DEPTH; i++) {
+        if (gStackList[i].memPtr != NULL) {
+            free(gStackList[i].memPtr);
+            gStackList[i].memPtr = NULL;
         }
     }
+
     CloseResourceFile(gResourceId);
     ResourceShutDown();
 }
@@ -87,6 +98,21 @@ void NDAInit(int code)
     if (code) {
         gCalcActive = FALSE;
         gUserId = MMStartUp();
+
+        LoadTools((Pointer)&gToolTable);
+
+        if (!ListStatus()) {
+            ListStartUp();
+            gListStarted = TRUE;
+        }
+
+        if (!SANEStatus()) {
+            Handle hdl = NewHandle(256, gUserId, 
+                    attrBank | attrFixed | attrLocked | attrPage, NULL);
+            SANEStartUp((Word) *hdl);
+            gSANEStarted = TRUE;
+        }
+
         abCalcInit();
 
         for (i = 0; i < AB_CALC_STACK_DEPTH; i++) {
@@ -94,6 +120,16 @@ void NDAInit(int code)
         }
     } else if (gCalcActive) {
         NDAClose();
+
+        if (gSANEStarted) {
+            SANEShutDown();
+            gSANEStarted = FALSE;
+        }
+
+        if (gListStarted) {
+            ListShutDown();
+            gListStarted = FALSE;
+        }
     }
 }
 
@@ -146,6 +182,7 @@ GrafPortPtr NDAOpen(void)
     SetSysWindow(gCalcWinPtr);
     ShowWindow(gCalcWinPtr);
     SelectWindow(gCalcWinPtr);
+    SetPort(gCalcWinPtr);
 
     if (gOpList == NULL) {
         numOps = abCalcOpNumOps();
@@ -155,10 +192,11 @@ GrafPortPtr NDAOpen(void)
             gOpList[i].memFlag = 0;
         }
     }
+
     opListCtl = (Handle)GetCtlHandleFromID(gCalcWinPtr, abCalcOpList);
     NewList2(NULL, 1, (Ref)gOpList, 0, numOps, opListCtl);
 
-    UpdateStack(FALSE);
+    UpdateStack();
 
     gCalcActive = TRUE;
 
@@ -174,7 +212,7 @@ GrafPortPtr NDAOpen(void)
 }
 
 
-void UpdateStack(BOOLEAN draw)
+void UpdateStack(void)
 {
     Handle stackListCtl;
     int i;
@@ -191,128 +229,214 @@ void UpdateStack(BOOLEAN draw)
         if (gStackList[i].memPtr == NULL) {
             gStackList[i].memPtr = malloc(AB_CALC_EXPR_STRING_MAX + 8);
         }
-        abCalcStackExprStringAt(i, gStackList[i].memPtr);
+        abCalcStackExprStringAt(numToDisplay - i - 1, gStackList[i].memPtr);
         gStackList[i].memFlag = 0;
     }
 
     NewList2(NULL, 1, (Ref)gStackList, 0, numToDisplay, stackListCtl);
 
-    if (draw)
-        DrawMember2(0, stackListCtl);
+    SelectMember2(numToDisplay, stackListCtl);
+    ResetMember2(stackListCtl);
 }
 
 
-void DoCalcStuff(char *cmd)
+void PushCalcEntry(CtlRecHndl entryBox)
+{
+    static Str255 strBuf;
+    abCalcOp *op;
+
+    GetLETextByID(gCalcWinPtr, abCalcEntryBox, &strBuf);
+    
+    if (strBuf.textLength > 0) {
+        strBuf.text[strBuf.textLength] = '\0';
+
+        op = abCalcOpLookup(strBuf.text);
+
+        if (op != NULL) {
+            op->execute();
+        } else if (abCalcParseExpr(&gNDAExpr, strBuf.text) != NULL) {
+            abCalcStackExprPush(&gNDAExpr);
+        } else {
+            abCalcRaiseError(abCalcSyntaxError, NULL);
+            return;
+        }
+    
+        strBuf.textLength = 0;
+        SetLETextByID(gCalcWinPtr, abCalcEntryBox, &strBuf);
+    }
+}
+
+
+void ExecCalcCmd(char *cmd)
 {
     abCalcOp *op = abCalcOpLookup(cmd);
+    CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
+
+    PushCalcEntry(entryBox);
 
     if (op != NULL) {
         op->execute();
-    } else if (abCalcParseExpr(&gNDAExpr, cmd) != NULL) {
-        abCalcStackExprPush(&gNDAExpr);
-    } else {
-        abCalcRaiseError(abCalcSyntaxError, NULL);
     }
     
-    UpdateStack(TRUE);
+    UpdateStack();
+}
+
+
+void InsertChar(CtlRecHndl entryBox, char ch)
+{
+    LERecHndl leHandle;
+
+    HLock((Handle)entryBox);
+    leHandle = (LERecHndl)(*entryBox)->ctlData;
+    HUnlock((Handle)entryBox);
+
+    LEDelete(leHandle);
+    LEInsert(&ch, 1, leHandle);
+}
+
+
+void HandleStackClick(void)
+{
+    Handle stackListCtl = (Handle)GetCtlHandleFromID(gCalcWinPtr, abCalcStackList);
+
+    DrawMember2(ResetMember2(stackListCtl), stackListCtl);
+}
+
+
+void HandleOpClick(void)
+{
+    Handle opListCtl = (Handle)GetCtlHandleFromID(gCalcWinPtr, abCalcOpList);
+    int nthOp = ResetMember2(opListCtl);
+    abCalcOp *op;
+
+    if (nthOp > 0) {
+        nthOp--;
+        
+        op = abCalcOpNth(nthOp);
+        if (op != NULL) {
+            CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
+            PushCalcEntry(entryBox);
+            op->execute();
+            UpdateStack();
+        }
+
+        DrawMember2(nthOp + 1, opListCtl);
+    }
 }
 
 
 void HandleControl(EventRecord *event)
 {
-    static Str255 strBuf;
     CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
+    SetPort(gCalcWinPtr);
 
     switch (event->wmTaskData4) {
         case abCalcBtn0:
+            InsertChar(entryBox, '0');
             break;
 
         case abCalcBtn1:
+            InsertChar(entryBox, '1');
             break;
 
         case abCalcBtn2:
+            InsertChar(entryBox, '2');
             break;
 
         case abCalcBtn3:
+            InsertChar(entryBox, '3');
             break;
 
         case abCalcBtn4:
+            InsertChar(entryBox, '4');
             break;
 
         case abCalcBtn5:
+            InsertChar(entryBox, '5');
             break;
 
         case abCalcBtn6:
+            InsertChar(entryBox, '6');
             break;
 
         case abCalcBtn7:
+            InsertChar(entryBox, '7');
             break;
 
         case abCalcBtn8:
+            InsertChar(entryBox, '8');
             break;
 
         case abCalcBtn9:
+            InsertChar(entryBox, '9');
             break;
 
         case abCalcBtnEnter:
-            GetLETextByID(gCalcWinPtr, abCalcEntryBox, &strBuf);
-            strBuf.text[strBuf.textLength] = '\0';
-            DoCalcStuff(strBuf.text);
-            strBuf.textLength = 0;
-            SetLETextByID(gCalcWinPtr, abCalcEntryBox, &strBuf);
+            PushCalcEntry(entryBox);
+            UpdateStack();
             break;
 
         case abCalcBtnDot:
+            InsertChar(entryBox, '.');
             break;
 
         case abCalcBtnNum:
+            InsertChar(entryBox, '#');
             break;
 
         case abCalcBtnAdd:
-            DoCalcStuff("+");
+            ExecCalcCmd("+");
             break;
 
         case abCalcBtnSub:
-            DoCalcStuff("-");
+            ExecCalcCmd("-");
             break;
 
         case abCalcBtnMult:
-            DoCalcStuff("*");
+            ExecCalcCmd("*");
             break;
 
         case abCalcBtnDiv:
-            DoCalcStuff("/");
+            ExecCalcCmd("/");
             break;
 
         case abCalcBtnPow:
-            DoCalcStuff("^");
+            ExecCalcCmd("^");
             break;
 
         case abCalcBtnA:
+            InsertChar(entryBox, 'A');
             break;
 
         case abCalcBtnB:
+            InsertChar(entryBox, 'B');
             break;
 
         case abCalcBtnC:
+            InsertChar(entryBox, 'C');
             break;
 
         case abCalcBtnD:
+            InsertChar(entryBox, 'D');
             break;
 
         case abCalcBtnE:
+            InsertChar(entryBox, 'E');
             break;
 
         case abCalcBtnF:
+            InsertChar(entryBox, 'F');
             break;
 
         case abCalcEntryBox:
             break;
 
         case abCalcStackList:
+            HandleStackClick();
             break;
 
         case abCalcOpList:
+            HandleOpClick();
             break;
     }
 }
@@ -345,14 +469,4 @@ BOOLEAN NDAAction(EventRecord *sysEvent, int code)
     }
 
     return FALSE;
-}
-
-
-/* I shouldn't need a main() but the linker seems to want one when I
-   link multiple objects together in the final link step.  If I only
-   have a single object, there is no problem.  There is probable a
-   compile incantation which will avoid this but for now... */
-int main(void)
-{
-    return 0;
 }

@@ -44,7 +44,7 @@ fixfiles:
 	chtyp -l CC ops/*.c ops/*.h
 
 %.o: %.c
-	occ $(CFLAGS) -c -o $@ $<
+	occ $(CFLAGS) -r -c -o $@ $<
 
 %.r: %.rez
 	occ -o $@ $<
