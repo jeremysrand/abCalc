@@ -81,9 +81,11 @@
 #define abCalcBtnPow    2047
 #define abCalcBtnPowStr 2048
 
-#define abCalcEntryBox 2049
-#define abCalcStackList 2050
-#define abCalcOpList 2051
+#define abCalcEntryBox 3001
+#define abCalcStackList 3002
+#define abCalcOpList 3003
+
+#define abCalcErrorAlert 4001
 
 
 #define abCalcWinX 10

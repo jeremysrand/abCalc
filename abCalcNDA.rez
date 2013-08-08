@@ -453,3 +453,10 @@ resource rControlTemplate (abCalcEntryBox) {
       0                                 /* text Ref */
       }};
    };
+
+resource rAlertString (abCalcErrorAlert) {
+    "23/"
+    "*0"
+    "/^#0\$00"
+};
+

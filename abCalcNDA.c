@@ -240,6 +240,20 @@ void UpdateStack(void)
 }
 
 
+BOOLEAN ErrorRaised(void)
+{
+    char *errorString = abCalcGetError();
+    if (errorString == NULL) {
+        return FALSE;
+    }
+
+    AlertWindow(awCString+awResource, (Pointer)&errorString, abCalcErrorAlert);
+
+    abCalcClearError(); 
+    return TRUE;
+}
+
+
 void PushCalcEntry(CtlRecHndl entryBox)
 {
     static Str255 strBuf;
@@ -274,9 +288,12 @@ void ExecCalcCmd(char *cmd)
 
     PushCalcEntry(entryBox);
 
-    if (op != NULL) {
+    if ((!ErrorRaised()) &&
+        (op != NULL)) {
         op->execute();
     }
+
+    ErrorRaised();
     
     UpdateStack();
 }
@@ -316,7 +333,13 @@ void HandleOpClick(void)
         if (op != NULL) {
             CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
             PushCalcEntry(entryBox);
-            op->execute();
+
+            if (!ErrorRaised()) {
+                op->execute();
+            }
+
+            ErrorRaised();
+
             UpdateStack();
         }
 
@@ -373,6 +396,7 @@ void HandleControl(EventRecord *event)
 
         case abCalcBtnEnter:
             PushCalcEntry(entryBox);
+            ErrorRaised();
             UpdateStack();
             break;
 

@@ -72,6 +72,7 @@ static int gNumOps = 0;
 
 void abCalcOpInit(void)
 {
+    gNumOps = 0;
     memset(gOps, 0, sizeof(gOps));
 
     abCalcOpAddInit();
