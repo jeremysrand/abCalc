@@ -4,8 +4,7 @@
  */
 
 
-#pragma nda NDAOpen NDAClose NDAAction NDAInit 0 0xFFFF "  abCalc\\H**"
-#pragma stacksize 2048
+#pragma nda NDAOpen NDAClose NDAAction NDAInit -1 0xFFFF "  abCalc\\H**"
 
 
 #include <orca.h>
@@ -22,6 +21,7 @@
 #include <List.h>
 #include <Sane.h>
 #include <LineEdit.h>
+#include <Scrap.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -36,6 +36,8 @@
 #include "ops/abCOp.h"
 
 
+#define MIN_STACK_ITEMS 4
+
 void UpdateStack(void);
 
 
@@ -45,14 +47,8 @@ typedef struct listElement {
 } listElement;
 
 
-static ToolTable gToolTable = {
-    2,
-    { { 0x1c, 0 },      /* List Manager */
-      { 0x0a, 0 } }     /* SANE */
-};
-
 static BOOLEAN gListStarted = FALSE;
-static BOOLEAN gSANEStarted = FALSE;
+static Handle gSANEDirectPage = NULL;
 
 static BOOLEAN gCalcActive = FALSE;
 static GrafPortPtr gCalcWinPtr = NULL;
@@ -62,6 +58,10 @@ listElement *gOpList = NULL;
 listElement gStackList[AB_CALC_STACK_DEPTH];
 abCalcExpr gNDAExpr;
 
+static Str255 gStrBuf;
+static int gSelectedStackItem = -1;
+
+char *gBuffer = NULL;
 
 
 void NDAClose(void)
@@ -72,6 +72,11 @@ void NDAClose(void)
         CloseWindow(gCalcWinPtr);
         gCalcWinPtr = NULL;
         gCalcActive = FALSE;
+    }
+
+    if (gBuffer != NULL) {
+        free(gBuffer);
+        gBuffer = NULL;
     }
 
     if (gOpList != NULL) {
@@ -99,18 +104,17 @@ void NDAInit(int code)
         gCalcActive = FALSE;
         gUserId = MMStartUp();
 
-        LoadTools((Pointer)&gToolTable);
-
         if (!ListStatus()) {
+            LoadOneTool(0x1c, 0);
             ListStartUp();
             gListStarted = TRUE;
         }
 
         if (!SANEStatus()) {
-            Handle hdl = NewHandle(256, gUserId, 
+            LoadOneTool(0x0a, 0);
+            gSANEDirectPage = NewHandle(256, gUserId, 
                     attrBank | attrFixed | attrLocked | attrPage, NULL);
-            SANEStartUp((Word) *hdl);
-            gSANEStarted = TRUE;
+            SANEStartUp((Word) *gSANEDirectPage);
         }
 
         abCalcInit();
@@ -118,16 +122,17 @@ void NDAInit(int code)
         for (i = 0; i < AB_CALC_STACK_DEPTH; i++) {
             gStackList[i].memPtr = NULL;
         }
-    } else if (gCalcActive) {
-        NDAClose();
-
-        if (gSANEStarted) {
+    } else {
+        if (gSANEDirectPage) {
             SANEShutDown();
-            gSANEStarted = FALSE;
+            DisposeHandle(gSANEDirectPage);
+            UnloadOneTool(0x0a);
+            gSANEDirectPage = NULL;
         }
 
         if (gListStarted) {
             ListShutDown();
+            UnloadOneTool(0x1c);
             gListStarted = FALSE;
         }
     }
@@ -216,11 +221,10 @@ void UpdateStack(void)
 {
     Handle stackListCtl;
     int i;
-    int numOnStack = abCalcStackNumItems();
-    int numToDisplay = numOnStack;
+    int numToDisplay = abCalcStackNumItems();
 
-    if (numToDisplay < 4) {
-        numToDisplay = 4;
+    if (numToDisplay < MIN_STACK_ITEMS) {
+        numToDisplay = MIN_STACK_ITEMS;
     }
 
     stackListCtl = (Handle)GetCtlHandleFromID(gCalcWinPtr, abCalcStackList);
@@ -229,14 +233,13 @@ void UpdateStack(void)
         if (gStackList[i].memPtr == NULL) {
             gStackList[i].memPtr = malloc(AB_CALC_EXPR_STRING_MAX + 8);
         }
-        abCalcStackExprStringAt(numToDisplay - i - 1, gStackList[i].memPtr);
+        abCalcStackExprStringAt(numToDisplay - i - 1, gStackList[i].memPtr,
+                TRUE);
         gStackList[i].memFlag = 0;
     }
 
-    NewList2(NULL, 1, (Ref)gStackList, 0, numToDisplay, stackListCtl);
-
-    SelectMember2(numToDisplay, stackListCtl);
-    ResetMember2(stackListCtl);
+    NewList2(NULL, numToDisplay - 3, (Ref)gStackList, 0, numToDisplay, stackListCtl);
+    gSelectedStackItem = -1;
 }
 
 
@@ -256,27 +259,33 @@ BOOLEAN ErrorRaised(void)
 
 void PushCalcEntry(CtlRecHndl entryBox)
 {
-    static Str255 strBuf;
     abCalcOp *op;
 
-    GetLETextByID(gCalcWinPtr, abCalcEntryBox, &strBuf);
+    GetLETextByID(gCalcWinPtr, abCalcEntryBox, &gStrBuf);
     
-    if (strBuf.textLength > 0) {
-        strBuf.text[strBuf.textLength] = '\0';
+    if (gStrBuf.textLength > 0) {
+        gStrBuf.text[gStrBuf.textLength] = '\0';
 
-        op = abCalcOpLookup(strBuf.text);
+        op = abCalcOpLookup(gStrBuf.text);
 
         if (op != NULL) {
             op->execute();
-        } else if (abCalcParseExpr(&gNDAExpr, strBuf.text) != NULL) {
+        } else if (abCalcParseExpr(&gNDAExpr, gStrBuf.text) != NULL) {
             abCalcStackExprPush(&gNDAExpr);
         } else {
+            LERecHndl leHandle;
+
+            HLock((Handle)entryBox);
+            leHandle = (LERecHndl)(*entryBox)->ctlData;
+            HUnlock((Handle)entryBox);
+
+            LESetSelect(0, gStrBuf.textLength, leHandle);
             abCalcRaiseError(abCalcSyntaxError, NULL);
             return;
         }
     
-        strBuf.textLength = 0;
-        SetLETextByID(gCalcWinPtr, abCalcEntryBox, &strBuf);
+        gStrBuf.textLength = 0;
+        SetLETextByID(gCalcWinPtr, abCalcEntryBox, &gStrBuf);
     }
 }
 
@@ -312,11 +321,115 @@ void InsertChar(CtlRecHndl entryBox, char ch)
 }
 
 
+void ExecMinusButton(void)
+{
+    int i;
+    char aChar;
+    BOOLEAN doCmd = FALSE;
+    BOOLEAN dotSeen = FALSE;
+
+    CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
+    GetLETextByID(gCalcWinPtr, abCalcEntryBox, &gStrBuf);
+
+    if (gStrBuf.textLength > 0) {
+        doCmd = TRUE;
+
+        gStrBuf.text[gStrBuf.textLength] = '\0';
+
+        aChar = gStrBuf.text[gStrBuf.textLength - 1];
+        if (((aChar == 'e') ||
+             (aChar == 'E')) &&
+            (gStrBuf.textLength > 1)) {
+            doCmd = FALSE;
+            for (i = 0; i < gStrBuf.textLength - 1; i++) {
+                switch (gStrBuf.text[i]) {
+                    case '-':
+                        if (i != 0) {
+                            doCmd = TRUE;
+                        }
+                        break;
+
+                    case '0':
+                    case '1':
+                    case '2':
+                    case '3':
+                    case '4':
+                    case '5':
+                    case '6':
+                    case '7':
+                    case '8':
+                    case '9':
+                        break;
+
+                    case '.':
+                        if (dotSeen) {
+                            doCmd = TRUE;
+                        } else {
+                            dotSeen = TRUE;
+                        }
+                        break;
+
+                    default:
+                        doCmd = TRUE;
+                        break;
+                }
+                if (doCmd)
+                    break;
+            }
+        }
+    }
+
+    if (doCmd) {
+        ExecCalcCmd("-");
+    } else {
+        InsertChar(entryBox, '-');
+    }
+
+    return;
+}
+
+
+void HandleEntryBox(void)
+{
+    Handle stackListCtl = (Handle)GetCtlHandleFromID(gCalcWinPtr, abCalcStackList);
+    if (gSelectedStackItem != -1) {
+        ResetMember2(stackListCtl);
+        DrawMember2(gSelectedStackItem, stackListCtl);
+        gSelectedStackItem = -1;
+    }
+}
+
+
 void HandleStackClick(void)
 {
     Handle stackListCtl = (Handle)GetCtlHandleFromID(gCalcWinPtr, abCalcStackList);
+    int nthOp;
+    int numStackItems = abCalcStackNumItems();
+    int numDisplayed = numStackItems;
+    int selectedStackItem = -1;
 
-    DrawMember2(ResetMember2(stackListCtl), stackListCtl);
+    nthOp = NextMember2(0, stackListCtl);
+    if (nthOp == gSelectedStackItem) {
+        ResetMember2(stackListCtl);
+        DrawMember2(gSelectedStackItem, stackListCtl);
+        gSelectedStackItem = -1;
+        nthOp = NextMember2(0, stackListCtl);
+    }
+    if (nthOp == 0)
+        return;
+
+    if (numDisplayed < MIN_STACK_ITEMS)
+        numDisplayed = MIN_STACK_ITEMS;
+
+    selectedStackItem = numDisplayed + 1 - nthOp;
+
+    if (selectedStackItem > numStackItems) {
+        ResetMember2(stackListCtl);
+        DrawMember2(nthOp, stackListCtl);
+        gSelectedStackItem = -1;
+    } else {
+        gSelectedStackItem = nthOp;
+    }
 }
 
 
@@ -413,7 +526,7 @@ void HandleControl(EventRecord *event)
             break;
 
         case abCalcBtnSub:
-            ExecCalcCmd("-");
+            ExecMinusButton();
             break;
 
         case abCalcBtnMult:
@@ -453,6 +566,7 @@ void HandleControl(EventRecord *event)
             break;
 
         case abCalcEntryBox:
+            HandleEntryBox();
             break;
 
         case abCalcStackList:
@@ -466,31 +580,185 @@ void HandleControl(EventRecord *event)
 }
 
 
+void DoCut(void)
+{
+    LERecHndl leHandle;
+    CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
+
+    HLock((Handle)entryBox);
+    leHandle = (LERecHndl)(*entryBox)->ctlData;
+    HUnlock((Handle)entryBox);
+
+    LECut(leHandle);
+    LEToScrap();
+}
+
+
+void DoCopy(void)
+{
+    Handle stackListCtl = (Handle)GetCtlHandleFromID(gCalcWinPtr, abCalcStackList);
+    LERecHndl leHandle;
+    CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
+
+    int numStackItems = abCalcStackNumItems();
+    int numDisplayed = numStackItems;
+    int selectedStackItem;
+
+    if (gSelectedStackItem == -1) {
+        HLock((Handle)entryBox);
+        leHandle = (LERecHndl)(*entryBox)->ctlData;
+        HUnlock((Handle)entryBox);
+
+        LECopy(leHandle);
+        LEToScrap();
+        return;
+    }
+
+    if (numDisplayed < MIN_STACK_ITEMS)
+        numDisplayed = MIN_STACK_ITEMS;
+
+    selectedStackItem = numDisplayed - gSelectedStackItem;
+
+    if (gBuffer == NULL) {
+        gBuffer = malloc(AB_CALC_EXPR_STRING_MAX);
+    }
+
+    if ((selectedStackItem >= 0) &&
+        (selectedStackItem < numStackItems) &&
+        (abCalcStackExprStringAt(selectedStackItem, gBuffer, FALSE) != NULL)) {
+        ZeroScrap();
+        PutScrap(strlen(gBuffer), textScrap, gBuffer);
+    }
+
+    SetPort(gCalcWinPtr);
+    ResetMember2(stackListCtl);
+    DrawMember2(gSelectedStackItem, stackListCtl);
+    gSelectedStackItem = -1;
+}
+
+
+void DoPaste(void)
+{
+    LERecHndl leHandle;
+    CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
+
+    HLock((Handle)entryBox);
+    leHandle = (LERecHndl)(*entryBox)->ctlData;
+    HUnlock((Handle)entryBox);
+
+    LEFromScrap();
+    LEPaste(leHandle);
+}
+
+
+void DoClear(void)
+{
+    LERecHndl leHandle;
+    CtlRecHndl entryBox = GetCtlHandleFromID(gCalcWinPtr, abCalcEntryBox);
+
+    HLock((Handle)entryBox);
+    leHandle = (LERecHndl)(*entryBox)->ctlData;
+    HUnlock((Handle)entryBox);
+
+    LEDelete(leHandle);
+}
+
+
+void HandleMenu(int menuItem)
+{
+    SetPort(gCalcWinPtr);
+
+    switch (menuItem) {
+        case cutAction:
+            DoCut();
+            break;
+
+        case copyAction:
+            DoCopy();
+            break;
+
+        case pasteAction:
+            DoPaste();
+            break;
+
+        case clearAction:
+            DoClear();
+            break;
+
+        default:
+            break;
+    }
+}
+
+
+void HandleKey(EventRecord *event)
+{
+    BOOLEAN appleKeyPressed = ((event->modifiers & appleKey) != 0);
+    char key = (event->message & 0xff);
+
+    if (!appleKeyPressed)
+        return;
+
+    switch (key) {
+        case 'C':
+        case 'c':
+            DoCopy();
+            break;
+
+        case 'X':
+        case 'x':
+            DoCut();
+            break;
+
+        case 'V':
+        case 'v':
+            DoPaste();
+            break;
+    }
+}
+
+
 BOOLEAN NDAAction(EventRecord *sysEvent, int code)
 {
     int event;
     static EventRecord localEvent;
     unsigned int eventCode;
+    BOOLEAN result = FALSE;
 
-    if (code == runAction)
-        return FALSE;
+    switch (code) {
+        case runAction:
+            return result;
 
-    if (code == eventAction) {
-        BlockMove((Pointer)sysEvent, (Pointer)&localEvent, 16);
-        localEvent.wmTaskMask = 0x001FFFFF;
-        eventCode = TaskMasterDA(0, &localEvent);
-        switch(eventCode) {
-            case updateEvt:
-                BeginUpdate(gCalcWinPtr);
-                DrawContents();
-                EndUpdate(gCalcWinPtr);
-                break;
+        case eventAction:
+            BlockMove((Pointer)sysEvent, (Pointer)&localEvent, 16);
+            localEvent.wmTaskMask = 0x001FFFFF;
+            eventCode = TaskMasterDA(0, &localEvent);
+            switch(eventCode) {
+                case updateEvt:
+                    BeginUpdate(gCalcWinPtr);
+                    DrawContents();
+                    EndUpdate(gCalcWinPtr);
+                    break;
 
-            case wInControl:
-                HandleControl(&localEvent);
-                break;
-        }
+                case wInControl:
+                    HandleControl(&localEvent);
+                    break;
+
+                case keyDownEvt:
+                case autoKeyEvt:
+                    HandleKey(&localEvent);
+                    break;
+            }
+            break;
+
+        case cutAction:
+        case copyAction:
+        case pasteAction:
+        case clearAction:
+            result = TRUE;
+            HandleMenu(code);
+            break;
     }
 
-    return FALSE;
+    return result;
 }

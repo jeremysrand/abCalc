@@ -58,7 +58,7 @@ void subtrExecute(void)
         } else if (expr2Real) {
             abCalcExprIntSet(&result, (abCalcIntType)expr2->u.real - expr1->u.integer);
         } else {
-            abCalcExprIntSet(&result, expr2->u.integer - expr2->u.integer);
+            abCalcExprIntSet(&result, expr2->u.integer - expr1->u.integer);
         }
     }
 

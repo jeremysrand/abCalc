@@ -17,7 +17,7 @@ $(SHELL_NAME): $(SHELL_OBJS)
 
 $(NDA_NAME): $(NDA_OBJS) $(NDA_NAME).r
 	cp -f $(NDA_NAME).r $(NDA_NAME)
-	occ -o $(NDA_NAME) $(NDA_OBJS)
+	occ -M -o $(NDA_NAME) $(NDA_OBJS) > $(NDA_NAME).map
 	chtyp -t nda $(NDA_NAME)
 
 abCalcMain.o: abCalcMain.c
@@ -30,6 +30,7 @@ clean:
 	cp -p rm -f $(SHELL_NAME) $(SHELL_OBJS) $(SHELL_NAME).root
 	cp -p rm -f $(NDA_NAME) $(NDA_OBJS) $(NDA_NAME).r $(NDA_NAME).root
 	cp -p rm -f *.root
+	cp -p rm -f *.map
 	cp -p rm -f expr/*.root
 	cp -p rm -f ops/*.root
 

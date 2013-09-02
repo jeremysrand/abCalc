@@ -34,7 +34,7 @@ abCalcExpr *abCalcExprIntParse(abCalcExpr *expr, char *buffer)
     abCalcModeIntBase base = abCalcModeGetBase();
     abCalcIntType value = 0;
     int len;
-    int offset;
+    int offset = 1;
 
     if (buffer == NULL)
         return NULL;
@@ -46,12 +46,18 @@ abCalcExpr *abCalcExprIntParse(abCalcExpr *expr, char *buffer)
     if (len < 2)
         return NULL;
 
-    if (buffer[0] != '#')
+    if (buffer[0] == '$') {
+        base = abCalcModeHexBase;
+    } else if ((buffer[0] == '0') &&
+               (buffer[1] == 'x')) {
+        base = abCalcModeHexBase;
+        offset = 2;
+    } else if (buffer[0] != '#')
         return NULL;
 
     switch (base) {
         case abCalcModeBinBase:
-            for (offset = 1; offset < len; offset++) {
+            for ( ; offset < len; offset++) {
                 value <<= 1;
                 switch (buffer[offset]) {
                     case '1':
@@ -68,7 +74,7 @@ abCalcExpr *abCalcExprIntParse(abCalcExpr *expr, char *buffer)
             break;
 
         case abCalcModeOctBase:
-            for (offset = 1; offset < len; offset++) {
+            for ( ; offset < len; offset++) {
                 value <<= 3;
                 switch (buffer[offset]) {
                     case '0':
@@ -89,7 +95,7 @@ abCalcExpr *abCalcExprIntParse(abCalcExpr *expr, char *buffer)
             break;
 
         case abCalcModeDecBase:
-            for (offset = 1; offset < len; offset++) {
+            for ( ; offset < len; offset++) {
                 value *= 10;
                 switch (buffer[offset]) {
                     case '0':
@@ -112,7 +118,7 @@ abCalcExpr *abCalcExprIntParse(abCalcExpr *expr, char *buffer)
             break;
 
         case abCalcModeHexBase:
-            for (offset = 1; offset < len; offset++) {
+            for ( ; offset < len; offset++) {
                 value <<= 4;
                 switch (buffer[offset]) {
                     case '0':

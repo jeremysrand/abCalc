@@ -22,7 +22,7 @@ abCalcExpr *abCalcStackExprPop(abCalcExpr *expr);
 
 abCalcExpr *abCalcStackExprAt(int depth);
 
-char *abCalcStackExprStringAt(int depth, char *buffer);
+char *abCalcStackExprStringAt(int depth, char *buffer, int addPrefix);
 
 int abCalcStackNumItems(void);
 

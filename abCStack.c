@@ -75,14 +75,18 @@ abCalcExpr *abCalcStackExprAt(int depth)
 }
 
 
-char *abCalcStackExprStringAt(int depth, char *buffer)
+char *abCalcStackExprStringAt(int depth, char *buffer, int addPrefix)
 {
     static char tmpBuffer[AB_CALC_EXPR_STRING_MAX];
 
     if (buffer == NULL)
         return NULL;
 
-    sprintf(buffer, "%3d: ", depth + 1);
+    if (addPrefix) {
+        sprintf(buffer, "%3d: ", depth + 1);
+    } else {
+        buffer[0] = '\0';
+    }
     if (depth < gStackNumItems) {
         if (abCalcFormatExpr(&(gStack[gStackNumItems - 1 - depth]), tmpBuffer) != NULL) {
             strcat(buffer, tmpBuffer);
