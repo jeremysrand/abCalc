@@ -89,6 +89,6 @@ ops/abCOpSinh.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExpRea
 ops/abCOpCosh.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExpReal.h ops/abCOpCosh.h
 ops/abCOpTanh.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExpReal.h ops/abCOpTanh.h
 ops/abCOpClear.o: ops/abCOp.h abCStack.h ops/abCOpClear.h
-ops/abCOpR2B.o: ops/abCOp.h abCStack.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h ops/abCOp.h ops/abCOpR2B.h
-ops/abCOpB2R.o: ops/abCOp.h abCStack.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h ops/abCOp.h ops/abCOpB2R.h
+ops/abCOpR2B.o: ops/abCOp.h abCStack.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h ops/abCOpR2B.h
+ops/abCOpB2R.o: ops/abCOp.h abCStack.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h ops/abCOpB2R.h
 
