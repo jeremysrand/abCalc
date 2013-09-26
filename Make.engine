@@ -16,7 +16,8 @@ OPS_OBJS=ops/abCOp.o ops/abCOpAdd.o ops/abCOpSubtr.o ops/abCOpMult.o \
     ops/abCOpSwap.o ops/abCOpSin.o ops/abCOpCos.o ops/abCOpTan.o ops/abCOpAsin.o \
     ops/abCOpAcos.o ops/abCOpAtan.o ops/abCOpSq.o ops/abCOpSqrt.o ops/abCOpPi.o \
     ops/abCOpLog.o ops/abCOpAlog.o ops/abCOpLn.o ops/abCOpExp.o ops/abCOpSinh.o \
-    ops/abCOpCosh.o ops/abCOpTanh.o ops/abCOpClear.o
+    ops/abCOpCosh.o ops/abCOpTanh.o ops/abCOpClear.o ops/abCOpR2B.o \
+    ops/abCOpB2R.o
 
 SHELL_OBJS=abCMain.o $(CALC_OBJS) $(EXPR_OBJS) $(OPS_OBJS)
 
@@ -88,4 +89,6 @@ ops/abCOpSinh.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExpRea
 ops/abCOpCosh.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExpReal.h ops/abCOpCosh.h
 ops/abCOpTanh.o: ops/abCOp.h abCError.h abCStack.h expr/abCExpr.h expr/abCExpReal.h ops/abCOpTanh.h
 ops/abCOpClear.o: ops/abCOp.h abCStack.h ops/abCOpClear.h
+ops/abCOpR2B.o: ops/abCOp.h abCStack.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h ops/abCOp.h ops/abCOpR2B.h
+ops/abCOpB2R.o: ops/abCOp.h abCStack.h abCError.h expr/abCExpr.h expr/abCExpReal.h expr/abCExprInt.h ops/abCOp.h ops/abCOpB2R.h
 

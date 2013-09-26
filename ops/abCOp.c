@@ -45,6 +45,9 @@
 #include "ops/abCOpCosh.h"
 #include "ops/abCOpTanh.h"
 
+#include "ops/abCOpR2B.h"
+#include "ops/abCOpB2R.h"
+
 #include "ops/abCOpAnd.h"
 #include "ops/abCOpOr.h"
 #include "ops/abCOpXor.h"
@@ -104,6 +107,9 @@ void abCalcOpInit(void)
     abCalcOpSinhInit();
     abCalcOpCoshInit();
     abCalcOpTanhInit();
+
+    abCalcOpR2BInit();
+    abCalcOpB2RInit();
 
     abCalcOpAndInit();
     abCalcOpOrInit();
