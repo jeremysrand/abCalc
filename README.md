@@ -23,9 +23,14 @@ To build this on a //GS, the steps are:
 
 1. Somehow copy the files to your //GS.  Depending on whether you are using a real machine or an emulator, your
 approach here may be different.
-2. Once you have the files, you should first execute "dmake fixfiles".  This makes sure all files have the right
+2. Find this line in your ORCACDefs/scrap.h file:
+    extern pascal void PutScrap(unsigned Longint, Word, Pointer) inline(0x0C16,dispatcher);
+and change it to
+    extern pascal void PutScrap(LongWord, Word, Pointer) inline(0x0C16,dispatcher);
+This is a bug in the headers which causes ORCA/C to generate the wrong output.
+3. Once you have the files, you should first execute "dmake fixfiles".  This makes sure all files have the right
 file types.
-3. Execute "dmake"
+4. Execute "dmake"
 
 When done, you will have two binaries.  The abCalc binary is a shell command you can use from GNO/ME.  And abCalcNDA
 is a new desk accessory which you can use from within GS/OS applications.
