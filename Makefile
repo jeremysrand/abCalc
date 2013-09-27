@@ -20,7 +20,7 @@ $(NDA_NAME): $(NDA_OBJS) $(NDA_NAME).r
 	occ -M -o $(NDA_NAME) $(NDA_OBJS) > $(NDA_NAME).map
 	chtyp -t nda $(NDA_NAME)
 
-abCalcMain.o: abCalcMain.c
+abCMain.o: abCMain.c
 	occ $(CFLAGS) -c -o $@ $<
 
 $(NDA_NAME).o: $(NDA_NAME).c
