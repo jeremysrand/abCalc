@@ -32,5 +32,10 @@ This is a bug in the headers which causes ORCA/C to generate the wrong output.
 file types.
 4. Execute "dmake"
 
-When done, you will have two binaries.  The abCalc binary is a shell command you can use from GNO/ME.  And abCalcNDA
-is a new desk accessory which you can use from within GS/OS applications.
+When done, you will have two binaries.  The abCalc binary is a shell command you can use from GNO/ME:
+
+![abCalc Shell Screenshot](/screenshots/abCalc.png "abCalc Shell Screenshot")
+
+And abCalcNDA is a new desk accessory which you can use from within GS/OS applications:
+
+![abCalc NDA Screenshot](/screenshots/abCalcNDA.png "abCalc NDA Screenshot")
