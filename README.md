@@ -3,6 +3,8 @@ abCalc
 
 The "Ass-Backward Calculator" for the Apple //GS - an RPN calculator NDA
 
+[Download a disk image](https://github.com/jeremysrand/abCalc/releases/download/v1.0.1/abCalc.2mg) or [download a SHK file](https://github.com/jeremysrand/abCalc/releases/download/v1.0.1/abCalc.SHK)
+
 The source can be built both from Mac OSX, resulting in a commandline binary which you can run on a Mac and from a //GS.
 To build and execute on a Mac:
 

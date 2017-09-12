@@ -23,11 +23,11 @@
 		9D1B84161F677D9A006AA28A /* abCError.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B840C1F677D9A006AA28A /* abCError.c */; };
 		9D1B84181F677D9A006AA28A /* abCMode.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B840F1F677D9A006AA28A /* abCMode.c */; };
 		9D1B84191F677D9A006AA28A /* abCStack.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B84111F677D9A006AA28A /* abCStack.c */; };
-		9D1B841B1F677DAB006AA28A /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B841A1F677DAB006AA28A /* README.md */; };
 		9D1B84851F677E91006AA28A /* abCalcNDA.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B84821F677E91006AA28A /* abCalcNDA.c */; };
 		9D1B84861F677E91006AA28A /* abCalcNDA.h in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B84831F677E91006AA28A /* abCalcNDA.h */; };
 		9D1B84881F677EA1006AA28A /* abCMain.c in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B84871F677EA1006AA28A /* abCMain.c */; };
 		9D1B848D1F67810E006AA28A /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 9D1B848C1F67810E006AA28A /* Makefile */; };
+		9D98EBBF1F6788AD003BCFE7 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9D98EBBE1F6788AD003BCFE7 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,7 +75,6 @@
 		9D1B84101F677D9A006AA28A /* abCMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = abCMode.h; sourceTree = "<group>"; };
 		9D1B84111F677D9A006AA28A /* abCStack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = abCStack.c; sourceTree = "<group>"; };
 		9D1B84121F677D9A006AA28A /* abCStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = abCStack.h; sourceTree = "<group>"; };
-		9D1B841A1F677DAB006AA28A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9D1B841D1F677DC6006AA28A /* abCExpr.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = abCExpr.c; sourceTree = "<group>"; };
 		9D1B841E1F677DC6006AA28A /* abCExpr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = abCExpr.h; sourceTree = "<group>"; };
 		9D1B841F1F677DC6006AA28A /* abCExpReal.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = abCExpReal.c; sourceTree = "<group>"; };
@@ -179,6 +178,7 @@
 		9D1B848A1F677FB0006AA28A /* abCalcHelp */ = {isa = PBXFileReference; lastKnownFileType = text; name = abCalcHelp; path = copydir/abCalcHelp; sourceTree = "<group>"; };
 		9D1B848B1F67808A006AA28A /* shell.mk */ = {isa = PBXFileReference; lastKnownFileType = text; path = shell.mk; sourceTree = "<group>"; };
 		9D1B848C1F67810E006AA28A /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		9D98EBBE1F6788AD003BCFE7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +195,7 @@
 		9D1B83D21F677D78006AA28A = {
 			isa = PBXGroup;
 			children = (
+				9D98EBBE1F6788AD003BCFE7 /* README.md */,
 				9D1B83DE1F677D78006AA28A /* abCalc */,
 				9D1B83DD1F677D78006AA28A /* Products */,
 			);
@@ -222,7 +223,6 @@
 				9D1B848C1F67810E006AA28A /* Makefile */,
 				9D1B83E41F677D78006AA28A /* nda.mk */,
 				9D1B848B1F67808A006AA28A /* shell.mk */,
-				9D1B841A1F677DAB006AA28A /* README.md */,
 				9D1B84811F677E27006AA28A /* shell */,
 				9D1B847F1F677E14006AA28A /* nda */,
 				9D1B841C1F677DC6006AA28A /* expr */,
@@ -483,7 +483,7 @@
 			files = (
 				9D1B84191F677D9A006AA28A /* abCStack.c in Sources */,
 				9D1B83E51F677D78006AA28A /* nda.mk in Sources */,
-				9D1B841B1F677DAB006AA28A /* README.md in Sources */,
+				9D98EBBF1F6788AD003BCFE7 /* README.md in Sources */,
 				9D1B848D1F67810E006AA28A /* Makefile in Sources */,
 				9D1B84161F677D9A006AA28A /* abCError.c in Sources */,
 				9D1B84851F677E91006AA28A /* abCalcNDA.c in Sources */,
@@ -656,6 +656,7 @@
 				9D1B84021F677D78006AA28A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9D1B84031F677D78006AA28A /* Build configuration list for PBXNativeTarget "doNotBuild" */ = {
 			isa = XCConfigurationList;
@@ -664,6 +665,7 @@
 				9D1B84051F677D78006AA28A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
