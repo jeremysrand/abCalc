@@ -36,8 +36,8 @@ file types.
 
 When done, you will have two binaries.  The abCalc binary is a shell command you can use from GNO/ME:
 
-![abCalc Shell Screenshot](/screenshots/abCalc.png "abCalc Shell Screenshot")
+![abCalc Shell Screenshot](/abCalc/screenshots/abCalc.png "abCalc Shell Screenshot")
 
 And abCalcNDA is a new desk accessory which you can use from within GS/OS applications:
 
-![abCalc NDA Screenshot](/screenshots/abCalcNDA.png "abCalc NDA Screenshot")
+![abCalc NDA Screenshot](/abCalc/screenshots/abCalcNDA.png "abCalc NDA Screenshot")
