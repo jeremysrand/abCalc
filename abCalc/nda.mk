@@ -1,6 +1,6 @@
 #
 #  Makefile
-#  	Apple //GS Build Engine for ORCA
+#  	Apple //GS Build Engine for ORCA and Merlin
 #
 
 include make/head.mk
@@ -44,6 +44,13 @@ CFLAGS+=-dABCALC_GSOS
 # Add any arguments you want passed to the resource compiler to this variable:
 REZFLAGS+=
 
+# Uncomment the following line if you have installed rlint as found here:
+#   https://github.com/ksherlock/rlint/releases
+# Assuming that it is in the path that ORCA searches (the Utilities directory is
+# probably a good choice), you can just leave the value unchanged.  If you have
+# put the rlint somewhere weird, you can set this to the correct path
+# RLINT_PATH=rlint
+
 # Add any arguments you want passed to the macro generator to this variable:
 MACGENFLAGS+=
 
@@ -84,10 +91,29 @@ COPYDIRS=copydir
 # If you have it in a different location, specify that here.
 # GSPORT=/Applications/GSport/GSport.app/Contents/MacOS/GSport
 
+# For a desktop application, it can operate in 640x200 or 320x200
+# resolution.  This setting is used to define which horizontal
+# resolution you want to use for a desktop application.  Other
+# target types ignore this value.
+# DESKTOP_RES_MODE=640
+
+# For a desktop application, it can support opening and printing
+# files based on paths sent to it by the message center.  This
+# option controls if that is or is not supported in the
+# application (note: only the C desktop template supports message
+# center today)
+# MESSAGE_CENTER=0
+
 # Add any rules you want to execute before any compiles or assembly
 # commands are called here, if any.  You can generate .c, .s or .h
 # files for example.  You can generate data files.  Whatever you
-# might need.
+# might need.  You should generate these files in the $(GENDIR)
+# directory or within a subdirectory under $(GENDIR) which you create
+# yourself.
+#
+# All of your commands associated with a rule _must_ start with a tab
+# character.  Xcode makes it a bit tough to type a tab character by
+# default.  Press option-tab within Xcode to insert a tab character.
 gen:
 
 # For any files you generated in the gen target above, you should

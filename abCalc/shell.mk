@@ -9,7 +9,7 @@ include make/head.mk
 # where to find files, etc.
 
 # The name of your system or binary file to build goes here:
-PGM=abCalcNDA
+PGM=abCalc
 
 # Set the target type you would like to build.  The options are:
 # 	shell - A shell command for ORCA, GNO or other GS shell
