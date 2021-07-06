@@ -61,7 +61,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "$PROJECT_DIR/abCalc"
+            argument = "&quot;$PROJECT_DIR/abCalc&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

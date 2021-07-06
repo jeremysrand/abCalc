@@ -18,3 +18,5 @@ The abCalc binary is a shell command you can use from GNO/ME:
 And abCalcNDA is a new desk accessory which you can use from within GS/OS applications:
 
 ![abCalc NDA Screenshot](/abCalc/screenshots/abCalcNDA.png "abCalc NDA Screenshot")
+
+[abCalc NDA Documentation](/abCalc/abCalcHelp.md)

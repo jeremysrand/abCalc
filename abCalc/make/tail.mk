@@ -6,10 +6,12 @@ export PATH := $(PATH):$(ORCA_BIN)
 
 CWD=$(shell pwd)
 
-DISKIMAGE=$(TARGETDIR)/$(PGM).2mg
+DISKIMAGE=$(TARGETDIR)/abCalc.2mg
+ARCHIVE=$(TARGETDIR)/abCalc.shk
+DESTBOOTIMAGE=$(TARGETDIR)/$(BOOTIMAGE)
 BUILDTARGET=$(DISKIMAGE)
 EXECTARGET=executeGUI
-DISKIMAGEDEST=.
+BOOTCOPYPATH=
 AUXTYPE=
 CFLAGS+=-i$(GENDIR)
 
@@ -31,18 +33,18 @@ else ifeq ($(TARGETTYPE),desktop)
     REZFLAGS+=rez='-d MESSAGE_CENTER=$(MESSAGE_CENTER)'
 else ifeq ($(TARGETTYPE),cda)
     FILETYPE=cda
-    DISKIMAGEDEST=System/Desk.Accs
+    BOOTCOPYPATH=System/Desk.Accs
 else ifeq ($(TARGETTYPE),cdev)
     BINTARGET=$(TARGETDIR)/$(PGM).bin
     FILETYPE=199
-    DISKIMAGEDEST=System/CDevs
+    BOOTCOPYPATH=System/CDevs
     REZFLAGS+=rez='-d BINTARGET="$(BINTARGET)"'
 else ifeq ($(TARGETTYPE),nba)
     FILETYPE=exe
     BUILDTARGET=$(TARGETDIR)/$(PGM)
 else ifeq ($(TARGETTYPE),nda)
     FILETYPE=nda
-    DISKIMAGEDEST=System/Desk.Accs
+    BOOTCOPYPATH=System/Desk.Accs
 else ifeq ($(TARGETTYPE),xcmd)
     FILETYPE=exe
     BUILDTARGET=$(TARGETDIR)/$(PGM)
@@ -71,17 +73,22 @@ REZ_SRCS=$(patsubst $(GENDIR)/%, %, $(patsubst ./%, %, $(wildcard $(addsuffix /*
 REZ_DEPS=$(patsubst %.rez, $(OBJDIR)/%.rez.d, $(REZ_SRCS))
 REZ_OBJS=$(patsubst %.rez, $(OBJDIR)/%.r, $(REZ_SRCS))
 
+TEACH_FILES=$(patsubst %.md, $(GENDIR)/Teach/%, $(MD_SRCS))
+ifneq ($(TEACH_FILES),)
+    COPYDIRS+=$(GENDIR)/Teach
+endif
+
 ifneq ($(firstword $(REZ_SRCS)), $(lastword $(REZ_SRCS)))
     $(error Only a single resource file supported, found $(REZ_SRCS))
 endif
 
-BUILD_OBJS=$(C_ROOTS) $(C_OBJS) $(ASM_ROOTS)
+BUILD_OBJS=$(C_ROOTS) $(C_OBJS) $(ASM_ROOTS) $(TEACH_FILES)
 ifeq ($(BINTARGET),)
     BUILD_OBJS+=$(REZ_OBJS)
 endif
 BUILD_OBJS_NOSUFFIX=$(C_ROOTS:.root=) $(C_OBJS:.a=) $(ASM_ROOTS:.ROOT=)
 
-ALL_OBJS=$(C_ROOTS:.root=.a) $(C_OBJS) $(ASM_OBJS) $(REZ_OBJS)
+ALL_OBJS=$(C_ROOTS:.root=.a) $(C_OBJS) $(ASM_OBJS) $(REZ_OBJS) $(TEACH_FILES)
 ALL_ROOTS=$(C_ROOTS) $(C_OBJS:.a=.root) $(ASM_ROOTS)
 ALL_DEPS=$(C_DEPS) $(ASM_DEPS) $(REZ_DEPS)
 
@@ -96,7 +103,7 @@ build: $(BUILDTARGET)
 gen: xcodefix
 
 xcodefix:
-	defaults write "$(ORCAM_PLUGIN_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)s -array `defaults read "$(XCODE_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)` || true
+	[ "`uname`" = Darwin ] && defaults write "$(ORCAM_PLUGIN_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)s -array `defaults read "$(XCODE_INFO)" $(XCODE_PLUGIN_COMPATIBILITY)` || true
 
 clean: genclean
 	$(RM) "$(TARGETDIR)/$(PGM)" $(BINTARGET)
@@ -105,6 +112,8 @@ clean: genclean
 	$(RM) $(ALL_DEPS)
 	$(RM) $(ASM_MACROS)
 	$(RM) "$(DISKIMAGE)"
+	$(RM) "$(DESTBOOTIMAGE)"
+	$(RM) "$(ARCHIVE)"
 
 createPackage:
 	pkg/createPackage
@@ -125,7 +134,7 @@ ifneq ($(REZ_OBJS),)
 	$(RM) $(TARGETDIR)/$(PGM)
 	$(CP) $(REZ_OBJS) $(TARGETDIR)/$(PGM)
 endif
-	cd $(OBJDIR); $(LINK) $(LDFLAGS) $(patsubst $(OBJDIR)/%, %, $(BUILD_OBJS_NOSUFFIX)) --keep=$(TARGETDIR)/$(PGM)
+	cd $(OBJDIR); $(LINK) $(LDFLAGS) $(patsubst $(OBJDIR)/%, %, $(BUILD_OBJS_NOSUFFIX)) keep="$(abspath $(TARGETDIR)/$(PGM))"
 	$(CHTYP) -t $(FILETYPE) $(AUXTYPE) $(TARGETDIR)/$(PGM)
 
     endif
@@ -154,7 +163,7 @@ else
 # resource compile will read the $(PGM).bin binary and load it into the
 # resources also.
 $(BINTARGET): $(BUILD_OBJS)
-	cd $(OBJDIR); $(LINK) $(LDFLAGS) $(patsubst $(OBJDIR)/%, %, $(BUILD_OBJS_NOSUFFIX)) --keep=$(BINTARGET)
+	cd $(OBJDIR); $(LINK) $(LDFLAGS) $(patsubst $(OBJDIR)/%, %, $(BUILD_OBJS_NOSUFFIX)) keep="$(abspath $(BINTARGET))"
 
     endif
 
@@ -178,13 +187,13 @@ $(TARGETDIR)/$(PGM): $(REZ_OBJS)
 
 endif
 
-$(DISKIMAGE): $(TARGETDIR)/$(PGM)
-	make/createDiskImage "$(DISKIMAGE)" "$(TARGETDIR)/$(PGM)" "$(DISKIMAGEDEST)" $(COPYDIRS)
+$(DISKIMAGE): $(TARGETDIR)/$(PGM) make/empty.2mg make/$(BOOTIMAGE)
+	make/createDiskImage "$(DISKIMAGE)" $(DESTBOOTIMAGE) "$(TARGETDIR)/$(PGM)" $(BOOTCOPYPATH)
 
 execute: $(EXECTARGET)
 
 executeGUI: all
-	make/launchEmulator $(DISKIMAGE)
+	make/launchEmulator "$(DISKIMAGE)" "$(DESTBOOTIMAGE)"
 
 executeShell: all
 	$(ORCA) $(TARGETDIR)/$(PGM)
@@ -218,6 +227,10 @@ $(OBJDIR)/%.r:    $(GENDIR)/%.rez
 ifneq ($(RLINT_PATH),)
 	$(ORCA) $(RLINT_PATH) $@
 endif
+
+$(GENDIR)/Teach/%: %.md
+	$(MKDIR) "$(GENDIR)/Teach"
+	$(ORCA) make/md2teach "$<" "$@"
 
 $(OBJS): Makefile
 
